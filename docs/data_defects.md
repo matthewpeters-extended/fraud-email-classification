@@ -195,3 +195,80 @@ never spans the train and test split. The size of the correction is reported.
 
 3,978 messages located, 3,976 parsed to usable bodies, 23 tests passing. One defect closed, one
 half resolved, two new ones logged. Phase 3 may proceed to corpus construction.
+
+## Phase 3: build the corpus
+
+Detail and tables in `docs/phase3_findings.md`. Counts in
+`data/processed/phase3_build_report.json`.
+
+### D2 update. The Subject prefix concern was correct about the source. Closed.
+
+Phase 1 withdrew this after finding the prefix absent from the reference's built corpus.
+Measured against the source files it is present on 1,368 of 1,368 spam rows and 4,360 of
+4,360 ham rows, and on 1 of 3,976 fraud messages. So the leak is real in the source and the
+reference had already handled it. We strip it too, in `src.corpus.strip_subject_prefix`.
+
+### D7 update. Duplication is worse than exact matching showed.
+
+Phase 2 measured 17.1 percent byte identical duplication in the fraud corpus. Near duplicate
+matching at cosine 0.85 raises that to 38.4 percent. Across all three classes, 2,776 of 9,699
+documents are redundant, or 28.6 percent. Resolved by sampling one document per cluster, which
+leaves the corpus with no duplicates at all and therefore none able to straddle the split. The
+build asserts zero cluster overlap rather than assuming it.
+
+### D8. Single linkage chaining in our own clustering. Severity: high, fixed.
+
+Not a defect in the data. A defect in our first implementation.
+
+Connected components clustering is single linkage, which merges A and C whenever both connect
+to B. On this corpus shared boilerplate produced chains rather than duplicate groups. The
+largest cluster held 232 fraud emails with a median pairwise cosine of 0.767 and a minimum of
+0.563. An 85 member Enron cluster had a minimum pairwise similarity of 0.045.
+
+Fixed by switching to complete linkage, under which every pair inside a cluster clears the
+threshold. Implemented in two stages so the full dense matrix of 47 million pairs is never
+needed: cheap connected components first, then exact complete linkage inside each component.
+Largest cluster fell from 232 to 112, redundancy from 32.3 percent to 28.6 percent. Pinned by
+`test_complete_linkage_refuses_to_chain`.
+
+### D9. The two sources disagree on the label of the same email. Severity: medium, resolved.
+
+Five clusters covering 12 documents carry two labels, every one of them FRAUD against SPAM.
+They are advance fee scams present in both the CLAIR fraud mailbox and the Enron spam corpus,
+because the same campaigns reached Enron employees.
+
+Decision: drop the contradicted clusters. A majority vote would invent information we do not
+have. More importantly this is a fact about the task rather than a data cleaning nuisance:
+advance fee fraud is a subset of spam, so the FRAUD and SPAM boundary is genuinely fuzzy and a
+perfect score on this problem would be a warning sign.
+
+### D10. A balanced 1,000 per class is unreachable after deduplication. Severity: medium, resolved.
+
+The spam pool of 1,368 rows reduces to 999 distinct clusters, and to 994 once contradictions
+are dropped. The reference's 1,000 per class was therefore only achievable by leaving
+duplicates in, and 26.9 percent of its spam class is redundant with the rest of that class.
+
+Decision: 900 per class, giving 2,700 documents, 2,160 train and 540 test. Spam draws 91
+percent of its pool, fraud 37 percent and normal 26 percent.
+
+### D11. Body length differs sharply by class. Severity: medium, open.
+
+<table>
+<tr><th>Class</th><th>Median words</th><th>Mean</th></tr>
+<tr><td>FRAUD</td><td>424</td><td>434</td></tr>
+<tr><td>SPAM</td><td>126</td><td>251</td></tr>
+<tr><td>NORMAL</td><td>204</td><td>313</td></tr>
+</table>
+
+Fraud is more than three times the median length of spam. Part of that is genuine, since an
+advance fee pitch needs room to tell a story, and part is an artifact of corpus provenance.
+
+Decision: phase 5 measures how far document length alone gets you, and phase 7 includes a
+length only baseline. If that baseline scores well, every later number must be read against
+it rather than against the majority class alone.
+
+### Phase 3 verdict
+
+2,700 document corpus, 900 per class, seed 20260914, zero cluster overlap across the split,
+52 tests passing. D2 and D7 closed, four new defects logged of which three are resolved and
+D11 is handed forward. Phase 4 may proceed to the source marker audit.

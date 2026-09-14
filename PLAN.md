@@ -4,7 +4,7 @@ Multi class text classification that sorts raw email bodies into Normal, Spam an
 the Fraud class is advance fee and wire transfer solicitation. Built as a resume portfolio piece
 with an honest evaluation protocol rather than a headline accuracy number.
 
-Status: phases 1 and 2 complete and verified. Phases 3 to 11 outstanding.
+Status: phases 1 to 3 complete and verified. Phases 4 to 11 outstanding.
 Created 2026 09 14.
 Scope locked with Matthew: three classes, scripts as the primary artefact.
 
@@ -127,8 +127,10 @@ mailbox, not a CSV. Split on the mbox envelope pattern, not on the literal strin
 loses two messages. True count is 3,978, of which 3,976 yield usable bodies. Detail in
 `docs/phase2_findings.md`.
 
-**Phase 3. Build the corpus.** Sample 1,000 per class with a fixed random seed, assemble
-`final_dataset.csv` with columns for text and label, and write a data dictionary.
+**Phase 3. Build the corpus.** Complete. Strip the source marker prefix, drop short bodies,
+cluster near duplicates with complete linkage, drop label contradictions, then sample one
+document per cluster with a fixed seed. 900 per class rather than 1,000, because the spam pool
+yields only 994 usable clusters. Detail in `docs/phase3_findings.md`.
 
 **Phase 4. Data defects audit.** The most important phase. Deduplication, near duplicate
 detection, and the source marker investigation described in section 8. Findings go to
@@ -225,12 +227,13 @@ check on the chosen model, and calibration applied if it is badly off.
 
 Decided in advance so it cannot be tuned after seeing results.
 
-* Split: stratified, 80 percent train and 20 percent test, split by near duplicate cluster,
-  seed fixed and recorded
+* Split: stratified, 80 percent train and 20 percent test. Every document comes from a
+  distinct near duplicate cluster, so no duplicate can straddle the split. Seed 20260914,
+  recorded in `data/processed/phase3_build_report.json`
 * Test split is touched exactly once, in phase 9
 * Model selection: stratified five fold cross validation on the training split, macro F1
 * Headline metric: macro F1 on the holdout, always quoted next to the 33.3 percent majority
-  baseline
+  baseline and next to the document length only baseline required by D11
 * Secondary: per class precision, recall and F1, confusion matrix, and Fraud class recall at a
   fixed precision target
 * Everything reported twice, once on the raw corpus and once with source marker tokens removed
@@ -274,3 +277,18 @@ passing. Every message count previously on record was wrong, including the refer
 artifact half of D4. Two new defects logged: D6 label noise at 0.1 percent, accepted, and D7
 duplication at 17.1 percent exact matches, which is the measurement confirming 8.3 and changes
 how phase 3 must sample. Detail in `docs/phase2_findings.md`.
+
+### Phase 3
+
+Complete and verified. 2,700 document corpus at 900 per class, 2,160 train and 540 test, seed
+20260914, zero near duplicate clusters straddling the split, 52 tests passing.
+
+Near duplicate matching raises fraud duplication from the 17.1 percent exact figure to 38.4
+percent, and the combined pool is 28.6 percent redundant. A balanced 1,000 per class turns out
+to be unreachable after honest deduplication, because the spam pool holds only 994 usable
+clusters, so the reference's corpus size depended on leaving duplicates in.
+
+One defect was our own: the first clustering pass used single linkage and chained unrelated
+documents through shared boilerplate, producing a 232 member cluster whose minimum pairwise
+similarity was 0.563. Replaced with two stage complete linkage. Detail in
+`docs/phase3_findings.md`.
