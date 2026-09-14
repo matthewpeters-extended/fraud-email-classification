@@ -12,6 +12,35 @@ measurement of those routes.
 
 <img src="reports/figures/phase7_baselines.png" alt="Baseline comparison showing that a model reading only seven formatting statistics reaches 0.70 macro F1" width="100%">
 
+## What the system does
+
+**Input** is the raw text body of a single email, with no headers, no sender information and
+no attachments. **Output** is one of three labels, plus a probability for the fraud class
+that can be thresholded when the model is used as a detector rather than a classifier.
+
+The pipeline, in order:
+
+<table>
+<tr><th>Stage</th><th>What happens</th></tr>
+<tr><td>1. Canonical normalisation</td><td>lowercase; strip quoted printable remnants and Unicode replacement characters; mask runs of digits to a single token; map the currency, at and percent signs to word tokens so they survive; drop remaining punctuation; collapse whitespace</td></tr>
+<tr><td>2. Provenance stripping</td><td>delete 42 curated tokens that name the source organisation, its employees, its city and phone fragments, its mail header furniture, and the two tools used to collect the spam</td></tr>
+<tr><td>3. Stopword removal</td><td>the NLTK English list, 186 words</td></tr>
+<tr><td>4. Lemmatisation</td><td>WordNet, verb form first and noun form only as a fallback behind a minimum length guard</td></tr>
+<tr><td>5. Vectorisation</td><td>TF IDF over unigrams and bigrams, minimum document frequency 2, sublinear term frequency scaling</td></tr>
+<tr><td>6. Classification</td><td>soft voting ensemble averaging multinomial naive Bayes, logistic regression and a random forest</td></tr>
+<tr><td>7. Decision</td><td>argmax over the three classes for the label; a 0.40 threshold on the fraud probability when used as a detector</td></tr>
+</table>
+
+Stages 1 through 6 are scikit learn transformers assembled into a single `Pipeline`, so the
+vectoriser vocabulary and document frequencies are fitted on training folds only and never
+see the data they are scored against. Stages 1 through 4 hold no learned state, which a test
+asserts directly by fitting on unrelated text and confirming the output does not change.
+
+Why each stage is there, and what it costs, is in the Method section below. The short version
+is that stages 1 and 2 exist to close measurable leaks, stages 3 and 4 change nothing
+measurable and are kept only because they halve the feature space, and stage 7 barely matters
+because the detector already sits against the corner of its precision recall curve.
+
 ## Result
 
 Held out test split of 540 documents, untouched from the moment it was created until the
