@@ -7,6 +7,14 @@ Entry point `scripts/audit_markers.py`, logic in `src/normalise.py` and `src/mar
 tests in `tests/test_normalise.py` and `tests/test_markers.py`. Numbers in
 `docs/phase4_audit.json`, figure in `reports/figures/phase4_leakage.png`.
 
+> **Revised at phase 5.** The blocklist grew from 34 to 42 tokens after the phase 5
+> discriminative ranking surfaced eight further provenance markers. The audit was rerun.
+> The markers only probe rises from 0.5763 to 0.6082 macro F1, documents containing no
+> marker fall from 66.1 to 63.2 percent, C3 rises from 0.9658 to 0.9671, and the total
+> attributable to provenance halves from 0.0028 to 0.0014. The conclusion is unchanged and
+> slightly strengthened. Figures below carry the original 34 token values where they are
+> part of the narrative; `docs/phase4_audit.json` holds the current numbers.
+
 All figures are macro F1 under five fold stratified cross validation on the **training
 split only**, seed 20260914. The test split is not touched until phase 9. Vectorisers sit
 inside pipelines so they are fitted on training folds only, which is the fix for `PLAN.md`
@@ -65,7 +73,7 @@ still hold on mail from a different company. The stated rule is therefore:
 > infrastructure component, or corpus collection tool. Keep every token that describes the
 > content, intent or rhetoric of the message.
 
-Final blocklist: 34 tokens in five groups. The sixteen tokens kept despite comparable skew
+Final blocklist: 34 tokens in five groups at this phase, later 42 after phase 5. The sixteen tokens kept despite comparable skew
 are listed with a reason each in `src/markers.py`, so the curation is auditable rather than
 implicit.
 

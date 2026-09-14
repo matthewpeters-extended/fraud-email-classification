@@ -4,7 +4,7 @@ Multi class text classification that sorts raw email bodies into Normal, Spam an
 the Fraud class is advance fee and wire transfer solicitation. Built as a resume portfolio piece
 with an honest evaluation protocol rather than a headline accuracy number.
 
-Status: phases 1 to 4 complete and verified. Phases 5 to 11 outstanding.
+Status: phases 1 to 5 complete and verified. Phases 6 to 11 outstanding.
 Created 2026 09 14.
 Scope locked with Matthew: three classes, scripts as the primary artefact.
 
@@ -137,9 +137,11 @@ four pipeline conditions measure what the fixes cost, and a transfer probe tests
 Formatting alone reaches 0.701 macro F1 with no words at all; removing every shortcut costs
 0.0028. Detail in `docs/phase4_findings.md`.
 
-**Phase 5. Exploratory analysis.** Length distributions per class, vocabulary overlap between
-classes, and the most discriminative terms. Establishes whether the classes are genuinely
-separable on content.
+**Phase 5. Exploratory analysis.** Complete. Length profiles, vocabulary overlap and
+coverage, type token ratios, and the terms that separate each class after cleaning. The
+signal is genuine and interpretable: 419 geography and narrative for fraud, product
+vocabulary and deliberate misspellings for spam, the vocabulary of doing a job for normal.
+Detail in `docs/phase5_findings.md`.
 
 **Phase 6. Preprocessing pipeline.** Lowercasing, punctuation and digit removal, stopword
 removal, lemmatisation. Implemented as a scikit learn transformer so it lives inside the
@@ -318,3 +320,33 @@ Logged as D13.
 One defect was ours again: `am` was blocked as a timestamp marker despite being the English
 verb that opens almost every advance fee email, which overstated the measured leak by 0.32
 macro F1. Logged as D12 and guarded by a test. Detail in `docs/phase4_findings.md`.
+
+Revised at phase 5: the blocklist grew to 42 tokens, the markers only probe rose to 0.6082,
+and the total attributable to provenance halved to 0.0014.
+
+### Phase 5
+
+Complete and verified. 109 tests passing.
+
+The content signal is genuine and interpretable. Fraud separates on the geography and
+narrative furniture of advance fee fraud, spam on product vocabulary and on deliberate
+misspellings such as `shlpplng` and `oniine` that exist to defeat keyword filters, and normal
+on the vocabulary of doing a job. No company name, employee name or header fragment survives
+into the ranking, so the phase 4 cleanup held.
+
+Fraud is the most templated class, type token ratio 0.0401 against spam's 0.0905, which
+independently confirms the phase 3 finding that 38.4 percent of the fraud corpus is
+redundant. Two methods at two phases agree that this is a genre written from scripts.
+
+Two corrections to earlier claims. D11 is amplified by the cleanup rather than mitigated: the
+fraud to spam median length ratio is 3.32 raw and 4.35 cleaned, because the Enron rows pad
+whitespace around punctuation so a raw word count credits them with punctuation as words. And
+D9 is downgraded to partially supported: the confusion matrix backs it strongly, vocabulary
+Jaccard contradicts it, and asymmetric coverage backs it, because shared vocabulary and
+confusability are not the same measurement.
+
+One defect was ours for the third time. The phase 5 leakage check asserted that no
+blocklisted token appeared in the discriminative ranking, which cannot fail because the
+pipeline strips them first. It passed, reported success, and missed eight genuine provenance
+markers sitting in plain sight in its own output. Logged as D14. Detail in
+`docs/phase5_findings.md`.

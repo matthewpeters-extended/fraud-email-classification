@@ -1,13 +1,13 @@
 {
   "phase": 4,
-  "recorded_utc": "2026-09-14T05:53:18+00:00",
+  "recorded_utc": "2026-09-14T05:58:22+00:00",
   "seed": 20260914,
   "folds": 5,
   "train_size": 2160,
   "scoring": "f1_macro",
   "majority_baseline_macro_f1": 0.16666666666666666,
   "majority_baseline_accuracy": 0.3333333333333333,
-  "blocklist_size": 34,
+  "blocklist_size": 42,
   "blocklist_groups": {
     "enron_organisation": [
       "eb",
@@ -22,7 +22,9 @@
       "xgate"
     ],
     "enron_people": [
+      "anjam",
       "crenshaw",
+      "donna",
       "gibner",
       "jeff",
       "kaminski",
@@ -40,16 +42,22 @@
       "5290",
       "713",
       "853",
-      "houston"
+      "baylor",
+      "houston",
+      "hsb",
+      "wharton"
     ],
     "header_furniture": [
       "cc",
+      "corp",
       "doc",
       "edu",
+      "forwarded",
       "fyi",
       "pm"
     ],
     "spam_collection_tools": [
+      "listinfo",
       "projecthoneypot",
       "spamassassin"
     ]
@@ -72,7 +80,7 @@
     "valuation": "genuine subject matter of legitimate corporate mail",
     "interview": "genuine subject matter of legitimate corporate mail"
   },
-  "documents_with_no_marker": 1427,
+  "documents_with_no_marker": 1366,
   "results": {
     "P1_formatting_only": {
       "name": "P1 formatting only, 7 style features, no words",
@@ -88,14 +96,14 @@
     },
     "P2_markers_only": {
       "name": "P2 provenance markers only, content discarded",
-      "macro_f1_mean": 0.5762976489568448,
-      "macro_f1_std": 0.02715982430548141,
+      "macro_f1_mean": 0.6082129477671406,
+      "macro_f1_std": 0.02694369508296433,
       "folds": [
-        0.5865526883834801,
-        0.5517396124222168,
-        0.5555403152657158,
-        0.6249287547731223,
-        0.5627268739396886
+        0.6114630562556825,
+        0.5909201671930004,
+        0.5941212034470943,
+        0.6591980385421087,
+        0.5853622733978175
       ]
     },
     "P3_length_only": {
@@ -148,13 +156,13 @@
     },
     "C3_normalised_stripped": {
       "name": "C3 normalised text, provenance markers stripped",
-      "macro_f1_mean": 0.9657677993762924,
-      "macro_f1_std": 0.005353365678152436,
+      "macro_f1_mean": 0.9671371301523928,
+      "macro_f1_std": 0.004735970815368012,
       "folds": [
         0.9722300924195598,
         0.9605727879262876,
-        0.9630237028461993,
-        0.9607650097512407,
+        0.9675961226167801,
+        0.9630392438611617,
         0.9722474039381747
       ]
     },
@@ -181,34 +189,34 @@
   },
   "c3_per_class": {
     "FRAUD": {
-      "precision": 0.9604904632152589,
-      "recall": 0.9791666666666666,
-      "f1-score": 0.9697386519944979,
+      "precision": 0.9605442176870749,
+      "recall": 0.9805555555555555,
+      "f1-score": 0.970446735395189,
       "support": 720.0
     },
     "NORMAL": {
-      "precision": 0.9872521246458924,
-      "recall": 0.9680555555555556,
-      "f1-score": 0.9775596072931276,
+      "precision": 0.9872881355932204,
+      "recall": 0.9708333333333333,
+      "f1-score": 0.9789915966386554,
       "support": 720.0
     },
     "SPAM": {
-      "precision": 0.95,
+      "precision": 0.9539748953974896,
       "recall": 0.95,
-      "f1-score": 0.95,
+      "f1-score": 0.9519832985386222,
       "support": 720.0
     },
-    "accuracy": 0.9657407407407408,
+    "accuracy": 0.9671296296296297,
     "macro avg": {
-      "precision": 0.965914195953717,
-      "recall": 0.9657407407407407,
-      "f1-score": 0.9657660864292085,
+      "precision": 0.967269082892595,
+      "recall": 0.9671296296296296,
+      "f1-score": 0.9671405435241556,
       "support": 2160.0
     },
     "weighted avg": {
-      "precision": 0.965914195953717,
-      "recall": 0.9657407407407408,
-      "f1-score": 0.9657660864292085,
+      "precision": 0.9672690828925948,
+      "recall": 0.9671296296296297,
+      "f1-score": 0.9671405435241556,
       "support": 2160.0
     }
   },
@@ -245,8 +253,8 @@
     ],
     "matrix": [
       [
-        705,
-        14,
+        706,
+        13,
         1
       ],
       [
@@ -256,15 +264,15 @@
       ],
       [
         1,
-        22,
-        697
+        20,
+        699
       ]
     ]
   },
   "deltas": {
     "normalisation": -0.002768096082524152,
-    "marker_stripping": -3.4124114380085224e-05,
-    "total_provenance": 0.002802220196904237,
-    "headroom_over_majority": 0.7991011327096258
+    "marker_stripping": 0.0013352066617202674,
+    "total_provenance": 0.0014328894208038845,
+    "headroom_over_majority": 0.8004704634857261
   }
 }

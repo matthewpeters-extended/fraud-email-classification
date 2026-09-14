@@ -356,3 +356,69 @@ and it is worth more than the headline score.
 D4 closed. D3 downgraded to low. D11 carried to phase 7 as a required baseline. Two new
 entries: D12, an over blocking error of our own, fixed; and D13, informational. 84 tests
 passing. Phase 5 may proceed to exploratory analysis.
+
+## Phase 5: exploratory analysis
+
+Detail and tables in `docs/phase5_findings.md`. Numbers in `docs/phase5_eda.json`.
+
+### D3 update. Eight more provenance markers found. Blocklist 34 to 42 tokens.
+
+The phase 4 sweep used document frequency 25 or more and purity 95 percent or more. Ranking
+the cleaned representation by log odds ratio surfaced markers that fell outside both
+thresholds: `forwarded` at 183 documents and 89 percent purity, and `corp` at 111 and 90
+percent, were the two highest frequency provenance markers in the corpus and both sat below
+the purity cut. `anjam`, `donna`, `wharton`, `baylor`, `hsb` and `listinfo` sat below the
+frequency cut.
+
+Rerunning the phase 4 audit with 42 tokens: the markers only probe rises from 0.5763 to
+0.6082 macro F1, documents containing no marker fall from 66.1 to 63.2 percent, and the
+total attributable to provenance halves from 0.0028 to 0.0014. Conclusion unchanged.
+
+### D9 update. Partially supported. Vocabulary overlap is weak evidence.
+
+The phase 4 confusion matrix supported D9 strongly: FRAUD against SPAM carried 57 percent of
+errors against 3 percent for FRAUD against NORMAL. Vocabulary Jaccard does not agree, ranking
+SPAM and NORMAL highest at 0.419 against 0.384 for FRAUD and SPAM.
+
+Jaccard is confounded by vocabulary size, and fraud's vocabulary is the largest at 3,218
+terms. Asymmetric coverage does support D9: spam's vocabulary is 62.1 percent contained
+inside fraud's, the highest containment of any ordered pair.
+
+The deeper point is that shared vocabulary and confusability are different measurements. Two
+classes can share most of their ordinary English and still separate trivially if the
+discriminating terms are strong. Recorded as partial rather than confirmed.
+
+### D11 update. Amplified by the cleanup, not mitigated. Still open.
+
+The fraud to spam median length ratio is 3.32 on raw text and 4.35 after normalisation. The
+cleanup widened the gap, because the Enron derived rows pad whitespace around punctuation so
+a raw word count credits spam and normal with tokens that are only punctuation. Fraud, with
+ordinary punctuation, was never credited that way.
+
+So the 0.4386 macro F1 measured for length alone was computed on raw counts and is a floor.
+Decision: phase 7 measures its length baseline on cleaned text.
+
+### D14. A leakage check that cannot fail is not a check. Severity: high, fixed.
+
+Not a defect in the data. A defect in our verification.
+
+The first version of the phase 5 script asserted that no blocklisted token appeared in the
+discriminative term ranking. The pipeline strips those tokens before the ranking is
+computed, so their absence was guaranteed by construction. The check passed, reported
+"confirmed: 0 of 75 ranked terms are blocklisted", and told us nothing. Meanwhile eight
+genuine provenance markers sat in the ranking, visible to anyone reading the output.
+
+Fixed by inverting the question. Every term in the ranking must now carry a recorded verdict
+in `src.markers.PHASE5_REVIEWED`, and the script exits non zero listing any term that does
+not. That forced explicit classification of all 75 ranked terms across two passes, since
+removing the first batch reshuffled the ranking and surfaced 24 more.
+
+The general lesson, and it belongs in the README next to D13: a verification that can only
+pass is worse than no verification, because it manufactures confidence. Ask whether a check
+could fail before trusting the fact that it passed.
+
+### Phase 5 verdict
+
+D3 updated with eight further markers. D9 downgraded to partially supported. D11 amplified
+and carried to phase 7. One new defect, D14, in our own verification, fixed. 109 tests
+passing. Phase 6 may proceed to the preprocessing pipeline.

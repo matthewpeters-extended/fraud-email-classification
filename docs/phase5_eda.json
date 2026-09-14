@@ -1,0 +1,590 @@
+{
+  "phase": 5,
+  "recorded_utc": "2026-09-14T05:58:13+00:00",
+  "train_size": 2160,
+  "min_df_vocab": 5,
+  "min_df_terms": 20,
+  "length_raw": {
+    "FRAUD": {
+      "count": 720,
+      "min": 50,
+      "p25": 309,
+      "median": 422,
+      "p75": 538,
+      "p90": 638,
+      "max": 2266,
+      "mean": 434.6
+    },
+    "SPAM": {
+      "count": 720,
+      "min": 5,
+      "p25": 74,
+      "median": 127,
+      "p75": 274,
+      "p90": 519,
+      "max": 6128,
+      "mean": 267.8
+    },
+    "NORMAL": {
+      "count": 720,
+      "min": 5,
+      "p25": 113,
+      "median": 208,
+      "p75": 385,
+      "p90": 668,
+      "max": 4834,
+      "mean": 312.3
+    }
+  },
+  "length_cleaned": {
+    "FRAUD": {
+      "count": 720,
+      "min": 55,
+      "p25": 325,
+      "median": 439,
+      "p75": 563,
+      "p90": 670,
+      "max": 2360,
+      "mean": 455.5
+    },
+    "SPAM": {
+      "count": 720,
+      "min": 5,
+      "p25": 59,
+      "median": 101,
+      "p75": 225,
+      "p90": 439,
+      "max": 5055,
+      "mean": 217.6
+    },
+    "NORMAL": {
+      "count": 720,
+      "min": 2,
+      "p25": 84,
+      "median": 150,
+      "p75": 271,
+      "p90": 450,
+      "max": 2870,
+      "mean": 217.8
+    }
+  },
+  "fraud_to_spam_median_ratio": 4.347,
+  "vocabulary_size": {
+    "FRAUD": 3218,
+    "SPAM": 2600,
+    "NORMAL": 2422
+  },
+  "type_token_ratio": {
+    "FRAUD": 0.04011,
+    "SPAM": 0.09047,
+    "NORMAL": 0.07246
+  },
+  "jaccard": {
+    "FRAUD": {
+      "SPAM": 0.3839,
+      "NORMAL": 0.3296
+    },
+    "SPAM": {
+      "FRAUD": 0.3839,
+      "NORMAL": 0.419
+    },
+    "NORMAL": {
+      "FRAUD": 0.3296,
+      "SPAM": 0.419
+    }
+  },
+  "coverage": {
+    "FRAUD": {
+      "SPAM": 0.5016,
+      "NORMAL": 0.4344
+    },
+    "SPAM": {
+      "FRAUD": 0.6208,
+      "NORMAL": 0.5704
+    },
+    "NORMAL": {
+      "FRAUD": 0.5772,
+      "SPAM": 0.6123
+    }
+  },
+  "exclusive_vocabulary": {
+    "FRAUD": 1385,
+    "SPAM": 682,
+    "NORMAL": 720
+  },
+  "discriminative_terms": {
+    "FRAUD": [
+      {
+        "term": "senegal",
+        "log_odds": 5.4817,
+        "df_in_class": 55,
+        "purity": 1.0
+      },
+      {
+        "term": "5m",
+        "log_odds": 5.442,
+        "df_in_class": 53,
+        "purity": 1.0
+      },
+      {
+        "term": "dakar",
+        "log_odds": 5.4217,
+        "df_in_class": 52,
+        "purity": 1.0
+      },
+      {
+        "term": "dormant",
+        "log_odds": 5.4009,
+        "df_in_class": 51,
+        "purity": 1.0
+      },
+      {
+        "term": "hospital",
+        "log_odds": 5.3798,
+        "df_in_class": 50,
+        "purity": 1.0
+      },
+      {
+        "term": "ghana",
+        "log_odds": 5.2202,
+        "df_in_class": 43,
+        "purity": 1.0
+      },
+      {
+        "term": "ivory",
+        "log_odds": 5.0345,
+        "df_in_class": 36,
+        "purity": 1.0
+      },
+      {
+        "term": "liberia",
+        "log_odds": 4.9444,
+        "df_in_class": 33,
+        "purity": 1.0
+      },
+      {
+        "term": "5million",
+        "log_odds": 4.9444,
+        "df_in_class": 33,
+        "purity": 1.0
+      },
+      {
+        "term": "dearest",
+        "log_odds": 4.9444,
+        "df_in_class": 33,
+        "purity": 1.0
+      },
+      {
+        "term": "donate",
+        "log_odds": 4.8462,
+        "df_in_class": 30,
+        "purity": 1.0
+      },
+      {
+        "term": "inheritance",
+        "log_odds": 4.8114,
+        "df_in_class": 29,
+        "purity": 1.0
+      },
+      {
+        "term": "chamber",
+        "log_odds": 4.7383,
+        "df_in_class": 27,
+        "purity": 1.0
+      },
+      {
+        "term": "frozen",
+        "log_odds": 4.6998,
+        "df_in_class": 26,
+        "purity": 1.0
+      },
+      {
+        "term": "seized",
+        "log_odds": 4.6599,
+        "df_in_class": 25,
+        "purity": 1.0
+      },
+      {
+        "term": "inherit",
+        "log_odds": 4.6599,
+        "df_in_class": 25,
+        "purity": 1.0
+      },
+      {
+        "term": "burkina",
+        "log_odds": 4.6599,
+        "df_in_class": 25,
+        "purity": 1.0
+      },
+      {
+        "term": "lord",
+        "log_odds": 4.6185,
+        "df_in_class": 24,
+        "purity": 1.0
+      },
+      {
+        "term": "beloved",
+        "log_odds": 4.6185,
+        "df_in_class": 24,
+        "purity": 1.0
+      },
+      {
+        "term": "abidjan",
+        "log_odds": 4.5799,
+        "df_in_class": 66,
+        "purity": 0.9851
+      },
+      {
+        "term": "faso",
+        "log_odds": 4.5754,
+        "df_in_class": 23,
+        "purity": 1.0
+      },
+      {
+        "term": "ivoire",
+        "log_odds": 4.5463,
+        "df_in_class": 64,
+        "purity": 0.9846
+      },
+      {
+        "term": "21st",
+        "log_odds": 4.5305,
+        "df_in_class": 22,
+        "purity": 1.0
+      },
+      {
+        "term": "accra",
+        "log_odds": 4.5305,
+        "df_in_class": 22,
+        "purity": 1.0
+      },
+      {
+        "term": "assuring",
+        "log_odds": 4.5305,
+        "df_in_class": 22,
+        "purity": 1.0
+      }
+    ],
+    "SPAM": [
+      {
+        "term": "andmanyother",
+        "log_odds": 5.5755,
+        "df_in_class": 60,
+        "purity": 1.0
+      },
+      {
+        "term": "viagra",
+        "log_odds": 5.4817,
+        "df_in_class": 55,
+        "purity": 1.0
+      },
+      {
+        "term": "mailings",
+        "log_odds": 5.3365,
+        "df_in_class": 48,
+        "purity": 1.0
+      },
+      {
+        "term": "shlpplng",
+        "log_odds": 4.8462,
+        "df_in_class": 30,
+        "purity": 1.0
+      },
+      {
+        "term": "mortgage",
+        "log_odds": 4.8114,
+        "df_in_class": 29,
+        "purity": 1.0
+      },
+      {
+        "term": "shops",
+        "log_odds": 4.7383,
+        "df_in_class": 27,
+        "purity": 1.0
+      },
+      {
+        "term": "va",
+        "log_odds": 4.6998,
+        "df_in_class": 26,
+        "purity": 1.0
+      },
+      {
+        "term": "oniine",
+        "log_odds": 4.6599,
+        "df_in_class": 25,
+        "purity": 1.0
+      },
+      {
+        "term": "opt",
+        "log_odds": 4.6599,
+        "df_in_class": 25,
+        "purity": 1.0
+      },
+      {
+        "term": "sightings",
+        "log_odds": 4.6185,
+        "df_in_class": 24,
+        "purity": 1.0
+      },
+      {
+        "term": "miiiion",
+        "log_odds": 4.4836,
+        "df_in_class": 21,
+        "purity": 1.0
+      },
+      {
+        "term": "prlces",
+        "log_odds": 4.4345,
+        "df_in_class": 20,
+        "purity": 1.0
+      },
+      {
+        "term": "advertisement",
+        "log_odds": 4.2371,
+        "df_in_class": 48,
+        "purity": 0.9796
+      },
+      {
+        "term": "solicitation",
+        "log_odds": 4.0709,
+        "df_in_class": 41,
+        "purity": 0.9762
+      },
+      {
+        "term": "fl",
+        "log_odds": 3.6005,
+        "df_in_class": 26,
+        "purity": 0.963
+      },
+      {
+        "term": "incredibly",
+        "log_odds": 3.5606,
+        "df_in_class": 25,
+        "purity": 0.9615
+      },
+      {
+        "term": "cd",
+        "log_odds": 3.5192,
+        "df_in_class": 24,
+        "purity": 0.96
+      },
+      {
+        "term": "sexual",
+        "log_odds": 3.3352,
+        "df_in_class": 20,
+        "purity": 0.9524
+      },
+      {
+        "term": "differ",
+        "log_odds": 3.3352,
+        "df_in_class": 20,
+        "purity": 0.9524
+      },
+      {
+        "term": "growing",
+        "log_odds": 3.089,
+        "df_in_class": 26,
+        "purity": 0.9286
+      },
+      {
+        "term": "thousands",
+        "log_odds": 2.9319,
+        "df_in_class": 31,
+        "purity": 0.9118
+      },
+      {
+        "term": "jul",
+        "log_odds": 2.9319,
+        "df_in_class": 31,
+        "purity": 0.9118
+      },
+      {
+        "term": "sex",
+        "log_odds": 2.9128,
+        "df_in_class": 47,
+        "purity": 0.9038
+      },
+      {
+        "term": "proven",
+        "log_odds": 2.9128,
+        "df_in_class": 47,
+        "purity": 0.9038
+      },
+      {
+        "term": "successfull",
+        "log_odds": 2.8728,
+        "df_in_class": 21,
+        "purity": 0.913
+      }
+    ],
+    "NORMAL": [
+      {
+        "term": "dinner",
+        "log_odds": 5.063,
+        "df_in_class": 37,
+        "purity": 1.0
+      },
+      {
+        "term": "derivatives",
+        "log_odds": 5.0345,
+        "df_in_class": 36,
+        "purity": 1.0
+      },
+      {
+        "term": "speaker",
+        "log_odds": 4.6599,
+        "df_in_class": 25,
+        "purity": 1.0
+      },
+      {
+        "term": "agenda",
+        "log_odds": 4.5305,
+        "df_in_class": 22,
+        "purity": 1.0
+      },
+      {
+        "term": "lunch",
+        "log_odds": 4.0451,
+        "df_in_class": 40,
+        "purity": 0.9756
+      },
+      {
+        "term": "valuation",
+        "log_odds": 3.6005,
+        "df_in_class": 26,
+        "purity": 0.963
+      },
+      {
+        "term": "interview",
+        "log_odds": 3.5722,
+        "df_in_class": 57,
+        "purity": 0.95
+      },
+      {
+        "term": "resume",
+        "log_odds": 3.4737,
+        "df_in_class": 52,
+        "purity": 0.9455
+      },
+      {
+        "term": "conference",
+        "log_odds": 3.3641,
+        "df_in_class": 83,
+        "purity": 0.9326
+      },
+      {
+        "term": "chair",
+        "log_odds": 3.3335,
+        "df_in_class": 33,
+        "purity": 0.9429
+      },
+      {
+        "term": "modeling",
+        "log_odds": 3.3335,
+        "df_in_class": 33,
+        "purity": 0.9429
+      },
+      {
+        "term": "weekend",
+        "log_odds": 3.2838,
+        "df_in_class": 19,
+        "purity": 0.95
+      },
+      {
+        "term": "friday",
+        "log_odds": 3.1344,
+        "df_in_class": 86,
+        "purity": 0.9149
+      },
+      {
+        "term": "model",
+        "log_odds": 3.015,
+        "df_in_class": 69,
+        "purity": 0.9079
+      },
+      {
+        "term": "suggested",
+        "log_odds": 2.9646,
+        "df_in_class": 23,
+        "purity": 0.92
+      },
+      {
+        "term": "rice",
+        "log_odds": 2.9319,
+        "df_in_class": 31,
+        "purity": 0.9118
+      },
+      {
+        "term": "var",
+        "log_odds": 2.9196,
+        "df_in_class": 22,
+        "purity": 0.9167
+      },
+      {
+        "term": "meeting",
+        "log_odds": 2.9077,
+        "df_in_class": 132,
+        "purity": 0.8859
+      },
+      {
+        "term": "yesterday",
+        "log_odds": 2.8982,
+        "df_in_class": 30,
+        "purity": 0.9091
+      },
+      {
+        "term": "students",
+        "log_odds": 2.8982,
+        "df_in_class": 30,
+        "purity": 0.9091
+      },
+      {
+        "term": "hr",
+        "log_odds": 2.8728,
+        "df_in_class": 21,
+        "purity": 0.913
+      },
+      {
+        "term": "weather",
+        "log_odds": 2.8275,
+        "df_in_class": 28,
+        "purity": 0.9032
+      },
+      {
+        "term": "units",
+        "log_odds": 2.8237,
+        "df_in_class": 20,
+        "purity": 0.9091
+      },
+      {
+        "term": "professor",
+        "log_odds": 2.8053,
+        "df_in_class": 35,
+        "purity": 0.8974
+      },
+      {
+        "term": "comments",
+        "log_odds": 2.7941,
+        "df_in_class": 42,
+        "purity": 0.8936
+      }
+    ]
+  },
+  "blocklisted_terms_surviving": 0,
+  "ranked_terms_unreviewed": [],
+  "blocked_at_phase5": [
+    "anjam",
+    "baylor",
+    "corp",
+    "donna",
+    "forwarded",
+    "hsb",
+    "listinfo",
+    "wharton"
+  ],
+  "figures": [
+    "phase5_length.png",
+    "phase5_terms.png",
+    "phase5_vocab_overlap.png"
+  ]
+}
