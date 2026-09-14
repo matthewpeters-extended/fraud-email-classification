@@ -4,7 +4,7 @@ Multi class text classification that sorts raw email bodies into Normal, Spam an
 the Fraud class is advance fee and wire transfer solicitation. Built as a resume portfolio piece
 with an honest evaluation protocol rather than a headline accuracy number.
 
-Status: phases 1 to 3 complete and verified. Phases 4 to 11 outstanding.
+Status: phases 1 to 4 complete and verified. Phases 5 to 11 outstanding.
 Created 2026 09 14.
 Scope locked with Matthew: three classes, scripts as the primary artefact.
 
@@ -132,9 +132,10 @@ cluster near duplicates with complete linkage, drop label contradictions, then s
 document per cluster with a fixed seed. 900 per class rather than 1,000, because the spam pool
 yields only 994 usable clusters. Detail in `docs/phase3_findings.md`.
 
-**Phase 4. Data defects audit.** The most important phase. Deduplication, near duplicate
-detection, and the source marker investigation described in section 8. Findings go to
-`docs/data_defects.md`.
+**Phase 4. Provenance audit.** Complete. Three isolation probes quantify each shortcut,
+four pipeline conditions measure what the fixes cost, and a transfer probe tests reliance.
+Formatting alone reaches 0.701 macro F1 with no words at all; removing every shortcut costs
+0.0028. Detail in `docs/phase4_findings.md`.
 
 **Phase 5. Exploratory analysis.** Length distributions per class, vocabulary overlap between
 classes, and the most discriminative terms. Establishes whether the classes are genuinely
@@ -232,10 +233,12 @@ Decided in advance so it cannot be tuned after seeing results.
   recorded in `data/processed/phase3_build_report.json`
 * Test split is touched exactly once, in phase 9
 * Model selection: stratified five fold cross validation on the training split, macro F1
-* Headline metric: macro F1 on the holdout, always quoted next to the 33.3 percent majority
-  baseline and next to the document length only baseline required by D11
+* Headline metric: macro F1 on the holdout, always quoted next to the majority baseline of
+  0.1667 macro F1 and next to the formatting only probe at 0.7013, which is the real bar a
+  model has to clear
 * Secondary: per class precision, recall and F1, confusion matrix, and Fraud class recall at a
-  fixed precision target
+  fixed precision target. The majority baseline for macro F1 is 0.1667, not 0.333. The 0.333
+  figure is accuracy, and quoting it as the macro F1 floor understates every model
 * Everything reported twice, once on the raw corpus and once with source marker tokens removed
 
 Success is not a high number. Success is a defensible number with the leakage quantified and the
@@ -292,3 +295,26 @@ One defect was our own: the first clustering pass used single linkage and chaine
 documents through shared boilerplate, producing a 232 member cluster whose minimum pairwise
 similarity was 0.563. Replaced with two stage complete linkage. Detail in
 `docs/phase3_findings.md`.
+
+### Phase 4
+
+Complete and verified. 84 tests passing. Section 8.1 is revised by measurement, and the
+revision runs against what we predicted.
+
+The shortcuts are real. Formatting alone, seven numeric features and no words, reaches 0.7013
+macro F1 against a majority baseline of 0.1667. Thirty four provenance tokens alone reach
+0.5763 with two thirds of documents containing none of them. Length alone reaches 0.4386.
+
+But removing all of it costs 0.0028 macro F1, less than the fold to fold standard deviation.
+The leaks are redundant with the content, not additive to it, so the reference's headline was
+never materially inflated. Reported as a negative result because that is what the measurement
+says.
+
+The finding worth more than the score: fitting with the shortcuts available and scoring
+without them drops macro F1 by 0.0078, so a model does lean on them, and a holdout drawn from
+the same corpus cannot detect it, because the leak and the signal agree. Only an ablation can.
+Logged as D13.
+
+One defect was ours again: `am` was blocked as a timestamp marker despite being the English
+verb that opens almost every advance fee email, which overstated the measured leak by 0.32
+macro F1. Logged as D12 and guarded by a test. Detail in `docs/phase4_findings.md`.

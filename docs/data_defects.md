@@ -272,3 +272,87 @@ it rather than against the majority class alone.
 2,700 document corpus, 900 per class, seed 20260914, zero cluster overlap across the split,
 52 tests passing. D2 and D7 closed, four new defects logged of which three are resolved and
 D11 is handed forward. Phase 4 may proceed to the source marker audit.
+
+## Phase 4: provenance audit
+
+Detail, tables and the full method in `docs/phase4_findings.md`. Numbers in
+`docs/phase4_audit.json`. Figure in `reports/figures/phase4_leakage.png`.
+
+All figures are macro F1, five fold cross validation on the training split only. Note the
+majority class baseline for macro F1 is 0.1667, not 0.333. The 0.333 figure is accuracy.
+
+### D3 update. The named entity leak is real but redundant. Severity downgraded to low.
+
+Thirty four curated provenance tokens, given to a classifier with all other content
+removed, reach 0.5763 macro F1, which is 3.46 times the majority baseline, and two thirds
+of training documents contain none of them. The leak is real.
+
+But stripping those tokens from the pipeline changes macro F1 by 0.0000, and normalisation
+plus stripping together costs 0.0028, which is smaller than the fold to fold standard
+deviation. The leak is redundant with the content rather than additive to it.
+
+Decision: markers stay stripped in all later phases. The cost is negligible and the
+shortcut is removed. Severity downgraded because the headline number was never inflated by
+it, which is the opposite of what `PLAN.md` 8.1 predicted.
+
+### D4 update. Closed, and it was the largest single artifact.
+
+Formatting alone, seven numeric style features and not one word, reaches 0.7013 macro F1.
+That is 4.21 times the majority baseline and the largest shortcut found in this project. A
+model trained on the raw corpus has a route to roughly seventy percent of the task without
+reading any text.
+
+An unanticipated component: D4 changes the token inventory, not just the appearance.
+`e-mail` appears in 100 percent Fraud documents purely because the Enron rows tokenise the
+same word as `e - mail`. Same for `co-operation`, `don't`, `yahoo.com`, `u.s` and `000.00`.
+
+Closed by canonical normalisation in `src.normalise`, which collapses both source styles to
+one representation. A test asserts that the same sentence in Enron style and in fraud
+mailbox style normalises to an identical string.
+
+### D11 update. Length alone reaches 0.4386. Carried into phase 7.
+
+2.63 times the majority baseline from a single feature. Real but the weakest of the three
+shortcuts. Decision: phase 7 baselines include length only and formatting only, so a model
+must beat 0.7013 rather than 0.1667 before it has demonstrated anything.
+
+### D12. Over blocking in our own curation. Severity: high, fixed.
+
+Not a defect in the data. A defect in our blocklist.
+
+`am` was blocked as an AM and PM timestamp marker. It is also the English verb, and it opens
+almost every advance fee email as "I am Mr ...". It had never appeared in the skew evidence
+and was added by assumption.
+
+Effect on the measurement: the markers only probe read 0.894 macro F1 with `am` wrongly
+blocked and 0.576 once corrected, an overstatement of 0.32. Documents containing no marker
+rose from 34.3 percent to 66.1 percent. Handing an ablation probe one very common content
+word lets it recover class information that has nothing to do with provenance.
+
+Fixed by removal. `test_no_blocked_token_is_a_common_english_word` now asserts the blocklist
+carries no ordinary English word. The lesson is that ablation probes are sensitive to
+blocklist errors in both directions.
+
+Residual judgement, flagged rather than resolved: `jeff`, `kevin` and `tanya` are blocked as
+named Enron individuals but are also common given names that would appear in mail from
+anywhere. This is the weakest part of the curation.
+
+### D13. A leak that agrees with the signal is invisible to holdout validation. Severity: informational.
+
+The most useful finding of the phase, and not a defect in this corpus so much as a fact
+about the method.
+
+Fitting with markers available and then scoring on input where they are removed drops macro
+F1 from 0.9658 to 0.9580. So a model handed the shortcuts does lean on them, and nothing in
+a conventional train and test split penalises it, because the leak and the genuine signal
+agree on this corpus. A holdout drawn from the same corpus cannot detect the dependence.
+Only an ablation can.
+
+Decision: record it prominently in the README. It is the transferable lesson of the project
+and it is worth more than the headline score.
+
+### Phase 4 verdict
+
+D4 closed. D3 downgraded to low. D11 carried to phase 7 as a required baseline. Two new
+entries: D12, an over blocking error of our own, fixed; and D13, informational. 84 tests
+passing. Phase 5 may proceed to exploratory analysis.

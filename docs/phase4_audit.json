@@ -1,0 +1,270 @@
+{
+  "phase": 4,
+  "recorded_utc": "2026-09-14T05:53:18+00:00",
+  "seed": 20260914,
+  "folds": 5,
+  "train_size": 2160,
+  "scoring": "f1_macro",
+  "majority_baseline_macro_f1": 0.16666666666666666,
+  "majority_baseline_accuracy": 0.3333333333333333,
+  "blocklist_size": 34,
+  "blocklist_groups": {
+    "enron_organisation": [
+      "eb",
+      "ebs",
+      "ect",
+      "ees",
+      "enron",
+      "enronxgate",
+      "hou",
+      "lon",
+      "vkamins",
+      "xgate"
+    ],
+    "enron_people": [
+      "crenshaw",
+      "gibner",
+      "jeff",
+      "kaminski",
+      "kevin",
+      "masson",
+      "shanbhogue",
+      "shirley",
+      "stinson",
+      "tanya",
+      "vasant",
+      "vince",
+      "zimin"
+    ],
+    "enron_place": [
+      "5290",
+      "713",
+      "853",
+      "houston"
+    ],
+    "header_furniture": [
+      "cc",
+      "doc",
+      "edu",
+      "fyi",
+      "pm"
+    ],
+    "spam_collection_tools": [
+      "projecthoneypot",
+      "spamassassin"
+    ]
+  },
+  "kept_despite_skew": {
+    "beneficiary": "the rhetoric of an advance fee pitch",
+    "kin": "next of kin, core advance fee framing",
+    "deceased": "core advance fee framing",
+    "foreigner": "core advance fee framing",
+    "modalities": "register and vocabulary of the scam genre",
+    "consignment": "register and vocabulary of the scam genre",
+    "abidjan": "genuine geography of advance fee fraud, not a corpus artifact",
+    "senegal": "genuine geography of advance fee fraud",
+    "abacha": "a real figure central to the 419 genre",
+    "viagra": "genuine spam product vocabulary",
+    "oniine": "deliberate misspelling of online, a real spam evasion tactic",
+    "shlpplng": "deliberate misspelling of shipping, a real spam evasion tactic",
+    "mortgage": "genuine spam product vocabulary",
+    "derivatives": "genuine subject matter of legitimate corporate mail",
+    "valuation": "genuine subject matter of legitimate corporate mail",
+    "interview": "genuine subject matter of legitimate corporate mail"
+  },
+  "documents_with_no_marker": 1427,
+  "results": {
+    "P1_formatting_only": {
+      "name": "P1 formatting only, 7 style features, no words",
+      "macro_f1_mean": 0.701319517656295,
+      "macro_f1_std": 0.020194157294929956,
+      "folds": [
+        0.6739600513102437,
+        0.6922135611057404,
+        0.7169236718712234,
+        0.7310695102493211,
+        0.692430793744946
+      ]
+    },
+    "P2_markers_only": {
+      "name": "P2 provenance markers only, content discarded",
+      "macro_f1_mean": 0.5762976489568448,
+      "macro_f1_std": 0.02715982430548141,
+      "folds": [
+        0.5865526883834801,
+        0.5517396124222168,
+        0.5555403152657158,
+        0.6249287547731223,
+        0.5627268739396886
+      ]
+    },
+    "P3_length_only": {
+      "name": "P3 document length only, one feature",
+      "macro_f1_mean": 0.43856407090379107,
+      "macro_f1_std": 0.006808411678061726,
+      "folds": [
+        0.44529924232501134,
+        0.44451684301798716,
+        0.43362051319100775,
+        0.4277439358788504,
+        0.44163982010609876
+      ]
+    },
+    "C0_majority": {
+      "name": "C0 majority class baseline",
+      "macro_f1_mean": 0.16666666666666666,
+      "macro_f1_std": 0.0,
+      "folds": [
+        0.16666666666666666,
+        0.16666666666666666,
+        0.16666666666666666,
+        0.16666666666666666,
+        0.16666666666666666
+      ]
+    },
+    "C1_raw": {
+      "name": "C1 raw text, no normalisation, markers intact",
+      "macro_f1_mean": 0.9685700195731967,
+      "macro_f1_std": 0.004281089960714009,
+      "folds": [
+        0.9745767496632549,
+        0.9653432770344375,
+        0.9722663062343321,
+        0.9630392438611617,
+        0.9676245210727968
+      ]
+    },
+    "C2_normalised": {
+      "name": "C2 normalised text, markers intact",
+      "macro_f1_mean": 0.9658019234906725,
+      "macro_f1_std": 0.00573755925642624,
+      "folds": [
+        0.9722851255729507,
+        0.9560931928928289,
+        0.9699675340536239,
+        0.9630392438611617,
+        0.9676245210727968
+      ]
+    },
+    "C3_normalised_stripped": {
+      "name": "C3 normalised text, provenance markers stripped",
+      "macro_f1_mean": 0.9657677993762924,
+      "macro_f1_std": 0.005353365678152436,
+      "folds": [
+        0.9722300924195598,
+        0.9605727879262876,
+        0.9630237028461993,
+        0.9607650097512407,
+        0.9722474039381747
+      ]
+    },
+    "P4_reliance_transfer": {
+      "name": "P4 fit with markers, scored without them",
+      "macro_f1_intact": 0.9658019234906725,
+      "macro_f1_stripped": 0.9579882542955687,
+      "drop": 0.007813669195103845,
+      "folds_intact": [
+        0.9722851255729507,
+        0.9560931928928289,
+        0.9699675340536239,
+        0.9630392438611617,
+        0.9676245210727968
+      ],
+      "folds_stripped": [
+        0.9676994529670652,
+        0.95145815443141,
+        0.9607642012976095,
+        0.95165960467949,
+        0.9583598581022686
+      ]
+    }
+  },
+  "c3_per_class": {
+    "FRAUD": {
+      "precision": 0.9604904632152589,
+      "recall": 0.9791666666666666,
+      "f1-score": 0.9697386519944979,
+      "support": 720.0
+    },
+    "NORMAL": {
+      "precision": 0.9872521246458924,
+      "recall": 0.9680555555555556,
+      "f1-score": 0.9775596072931276,
+      "support": 720.0
+    },
+    "SPAM": {
+      "precision": 0.95,
+      "recall": 0.95,
+      "f1-score": 0.95,
+      "support": 720.0
+    },
+    "accuracy": 0.9657407407407408,
+    "macro avg": {
+      "precision": 0.965914195953717,
+      "recall": 0.9657407407407407,
+      "f1-score": 0.9657660864292085,
+      "support": 2160.0
+    },
+    "weighted avg": {
+      "precision": 0.965914195953717,
+      "recall": 0.9657407407407408,
+      "f1-score": 0.9657660864292085,
+      "support": 2160.0
+    }
+  },
+  "c3_confusion_matrix": {
+    "labels": [
+      [
+        "C0_majority",
+        "majority\nbaseline"
+      ],
+      [
+        "P3_length_only",
+        "P3 length\nonly"
+      ],
+      [
+        "P2_markers_only",
+        "P2 markers\nonly"
+      ],
+      [
+        "P1_formatting_only",
+        "P1 formatting\nonly"
+      ],
+      [
+        "C1_raw",
+        "C1\nraw"
+      ],
+      [
+        "C2_normalised",
+        "C2\nnormalised"
+      ],
+      [
+        "C3_normalised_stripped",
+        "C3 normalised\nstripped"
+      ]
+    ],
+    "matrix": [
+      [
+        705,
+        14,
+        1
+      ],
+      [
+        28,
+        684,
+        8
+      ],
+      [
+        1,
+        22,
+        697
+      ]
+    ]
+  },
+  "deltas": {
+    "normalisation": -0.002768096082524152,
+    "marker_stripping": -3.4124114380085224e-05,
+    "total_provenance": 0.002802220196904237,
+    "headroom_over_majority": 0.7991011327096258
+  }
+}

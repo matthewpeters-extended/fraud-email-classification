@@ -57,6 +57,16 @@ source .venv/bin/activate && python scripts/run_experiment.py
 source .venv/bin/activate && python -m pytest -q
 ```
 
+## 7. Prose style check
+
+House style for this project is markdown prose with no dash characters. The check enforces
+it, allowing dashes only inside code fences, inline code, HTML code elements, URLs and
+markdown link targets.
+
+```bash
+source .venv/bin/activate && python scripts/check_prose.py
+```
+
 ## Lock file
 
 After any dependency change, refresh the lock.
