@@ -67,6 +67,15 @@ markdown link targets.
 source .venv/bin/activate && python scripts/check_prose.py
 ```
 
+## 8. Verify the write up
+
+The README is the deliverable, so its numbers are checked against the reports that produced
+them rather than trusted. Run this after any rerun of an analysis phase.
+
+```bash
+source .venv/bin/activate && python scripts/verify_readme.py
+```
+
 ## Lock file
 
 After any dependency change, refresh the lock.

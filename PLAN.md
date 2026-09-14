@@ -4,7 +4,9 @@ Multi class text classification that sorts raw email bodies into Normal, Spam an
 the Fraud class is advance fee and wire transfer solicitation. Built as a resume portfolio piece
 with an honest evaluation protocol rather than a headline accuracy number.
 
-Status: phases 1 to 10 complete and verified. Phase 11, the write up, outstanding.
+Status: complete. All eleven phases run and verified. Results in `README.md`, the
+build narrative in `WALKTHROUGH.md`, and per phase findings in `docs/`.
+Created 2026 09 14, completed 2026 09 14.
 Created 2026 09 14.
 Scope locked with Matthew: three classes, scripts as the primary artefact.
 
@@ -168,11 +170,11 @@ stated costs, calibration checked, and precision reprojected onto realistic mail
 prevalence. The threshold barely matters; the prevalence correction matters enormously.
 Detail in `docs/phase10_findings.md`.
 
-**Phase 11. Write up.** WALKTHROUGH.md, then README.md last with real numbers. The README
-leads on the deployment claim, zero fraud reaching the inbox and zero legitimate mail
-destroyed, not on a precision figure, and states the prevalence assumption behind every
-precision number it quotes. Section 10 of this plan carries the resume framing; the numbers
-to use are in `docs/phase9_holdout.json` and `docs/phase10_fraud.json`.
+**Phase 11. Write up.** Complete. `WALKTHROUGH.md` records how it was built with the wrong
+turns left in, then `README.md` with the measured numbers. The README leads on the deployment
+claim rather than a precision figure and states the prevalence assumption behind every
+precision number. `scripts/verify_readme.py` checks all 53 headline figures against the
+reports that produced them, so the write up cannot drift from the results.
 
 ## 8. Defects we inherit and fix
 
@@ -265,8 +267,16 @@ One line for the resume, to be finalised with real figures once phase 11 lands:
 > from 3,000 messages, identifying and quantifying a corpus construction leak that inflated
 > apparent accuracy, and reporting macro F1 against a stated majority baseline.
 
-The interview story is section 8.1. Finding that the model was reading the file it came from
-rather than the content is the kind of thing an interviewer actually wants to hear about.
+The interview story is not section 8.1 as originally planned, because that prediction turned
+out to be wrong: removing the leaks costs 0.0014 macro F1, so they never inflated the
+headline. The story is the correction. The leaks are real, individually worth 0.70 macro F1
+with no access to the text, and a model given them does lean on them, but because they agree
+with the genuine signal no holdout drawn from this corpus can detect the dependence. That is
+a more interesting thing to have found than the original hypothesis, and it only surfaced
+because the measurement was built before the conclusion.
+
+The second story is reading the seventeen holdout errors and finding that ten of them were
+the model being right.
 
 ## 11. Decisions taken
 
