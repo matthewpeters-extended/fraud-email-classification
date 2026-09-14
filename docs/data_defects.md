@@ -422,3 +422,59 @@ could fail before trusting the fact that it passed.
 D3 updated with eight further markers. D9 downgraded to partially supported. D11 amplified
 and carried to phase 7. One new defect, D14, in our own verification, fixed. 109 tests
 passing. Phase 6 may proceed to the preprocessing pipeline.
+
+## Phase 6: preprocessing ablation
+
+Detail and tables in `docs/phase6_findings.md`. Numbers in `docs/phase6_ablation.json`.
+
+### D11 closed. Length only baseline is 0.4698 on cleaned text.
+
+Phase 5 predicted the shortcut would strengthen after cleaning, because the Enron rows pad
+whitespace around punctuation so a raw word count credits them with punctuation as words.
+Confirmed: 0.4386 on raw text against 0.4698 on cleaned. Phase 7 uses the cleaned figure.
+
+### D15. Lemmatiser produced non words. Severity: high, fixed before it affected any result.
+
+WordNet's noun lemmatiser strips any trailing `s` it reads as a plural. The first
+implementation chained noun then verb and produced `was` to `wa`, `has` to `ha`, `us` to
+`u`, `as` to `a`, and `mrs` to `mr`.
+
+The last one is the one that mattered. `mrs` appears in 126 training documents at 96 percent
+fraud purity, and merging it into `mr` would have destroyed that signal without any error
+being raised.
+
+Fixed by reversing the order and guarding: verb lemma first, falling back to the noun lemma
+only when the verb step changed nothing and the result is at least three characters. Five
+bad cases corrected, ten good cases preserved, pinned by parametrised tests.
+
+### D16. Transformers were not fitted by scikit learn's definition. Severity: medium, fixed.
+
+The text steps hold no learned state, so their `fit` methods returned `self` without
+recording anything. `check_is_fitted` looks for an attribute ending in an underscore, so
+`Pipeline.transform` raised `NotFittedError`.
+
+The failure mode is why this matters. `fit_transform` works, so every cross validation run
+passes clean. Only fit once then transform many times breaks, which is exactly the pattern
+phase 9 uses to score the held out test set. A test caught it at phase 6 instead.
+
+Fixed with a shared `_StatelessTransformer` base that sets `fitted_` in `fit`.
+
+### D17. The signal pronoun exemption did not earn its place. Severity: informational.
+
+The hypothesis was that `i`, `am`, `my`, `your` and similar carry fraud register, since
+advance fee fraud is written in the first person about a named relative, so holding them
+back from the stopword list should help. Measured: 0.9657 with the exemption against 0.9676
+without it. Within noise, but the direction is opposite to the prediction and there is no
+evidence for the claim.
+
+Decision: `keep_signal` defaults to False. The mechanism stays so the comparison remains
+reproducible.
+
+### Phase 6 verdict
+
+D11 closed. Three new entries: D15 and D16 fixed, D17 informational. 143 tests passing.
+
+The phase level finding is a negative one worth stating plainly: no preprocessing step
+changes macro F1. The spread across nine conditions is 0.0042 against a fold standard
+deviation of 0.0049. The chosen pipeline was selected on stated secondary criteria,
+interpretability and feature space size, not on score. Phase 7 may proceed to baselines.

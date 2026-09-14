@@ -1,0 +1,184 @@
+{
+  "phase": 6,
+  "recorded_utc": "2026-09-14T14:59:38+00:00",
+  "seed": 20260914,
+  "folds": 5,
+  "train_size": 2160,
+  "majority_baseline_macro_f1": 0.16666666666666666,
+  "formatting_probe": 0.7013,
+  "stopword_count": 186,
+  "signal_stopwords_held_back": [
+    "am",
+    "he",
+    "her",
+    "his",
+    "i",
+    "me",
+    "my",
+    "no",
+    "not",
+    "she",
+    "you",
+    "your"
+  ],
+  "results": {
+    "S0": {
+      "label": "baseline: normalised, markers stripped",
+      "macro_f1_mean": 0.9671371301523928,
+      "macro_f1_std": 0.004735970815368012,
+      "folds": [
+        0.9722300924195598,
+        0.9605727879262876,
+        0.9675961226167801,
+        0.9630392438611617,
+        0.9722474039381747
+      ],
+      "vocabulary": 27632,
+      "mean_tokens_per_doc": 297.0,
+      "seconds": 2.3
+    },
+    "S1": {
+      "label": "+ stopwords removed, signal pronouns kept",
+      "macro_f1_mean": 0.965742761074622,
+      "macro_f1_std": 0.004677009528597743,
+      "folds": [
+        0.9744880279363038,
+        0.9651767149881034,
+        0.9607316376378714,
+        0.9630536758612922,
+        0.9652637489495389
+      ],
+      "vocabulary": 27496,
+      "mean_tokens_per_doc": 191.2,
+      "seconds": 2.3
+    },
+    "S2": {
+      "label": "+ stopwords removed, full NLTK list",
+      "macro_f1_mean": 0.9675770860300144,
+      "macro_f1_std": 0.005304222422499908,
+      "folds": [
+        0.9768109629701325,
+        0.9604796715938312,
+        0.9676859355013899,
+        0.9653356044590101,
+        0.9675732556257083
+      ],
+      "vocabulary": 27484,
+      "mean_tokens_per_doc": 169.2,
+      "seconds": 2.3
+    },
+    "S3": {
+      "label": "+ lemmatised",
+      "macro_f1_mean": 0.9657670243808634,
+      "macro_f1_std": 0.005901705451043143,
+      "folds": [
+        0.9745207105638366,
+        0.9605727879262876,
+        0.9653149188820139,
+        0.9584900958260981,
+        0.9699366087060802
+      ],
+      "vocabulary": 23480,
+      "mean_tokens_per_doc": 297.0,
+      "seconds": 3.4
+    },
+    "S4": {
+      "label": "+ stemmed",
+      "macro_f1_mean": 0.9657613601527523,
+      "macro_f1_std": 0.003953363645744518,
+      "folds": [
+        0.9722058957490217,
+        0.9629207436599945,
+        0.9653149188820139,
+        0.9607650097512407,
+        0.9676002327214902
+      ],
+      "vocabulary": 21321,
+      "mean_tokens_per_doc": 297.0,
+      "seconds": 2.7
+    },
+    "S5": {
+      "label": "+ stopwords kept signal + lemmatised",
+      "macro_f1_mean": 0.9662048025545819,
+      "macro_f1_std": 0.0045082629995812674,
+      "folds": [
+        0.9745207105638366,
+        0.9674989362909608,
+        0.9630237028461993,
+        0.9630536758612922,
+        0.96292698721062
+      ],
+      "vocabulary": 23367,
+      "mean_tokens_per_doc": 191.2,
+      "seconds": 2.5
+    },
+    "S6": {
+      "label": "+ stopwords kept signal + stemmed",
+      "macro_f1_mean": 0.9662077106417941,
+      "macro_f1_std": 0.0042695626112583705,
+      "folds": [
+        0.9745207105638366,
+        0.9651767149881034,
+        0.9630237028461993,
+        0.9630536758612922,
+        0.9652637489495389
+      ],
+      "vocabulary": 21228,
+      "mean_tokens_per_doc": 191.2,
+      "seconds": 2.5
+    },
+    "S7": {
+      "label": "+ stopwords full list + lemmatised",
+      "macro_f1_mean": 0.9662104427210935,
+      "macro_f1_std": 0.004525019143480303,
+      "folds": [
+        0.9745207105638366,
+        0.9628538916126486,
+        0.9630237028461993,
+        0.9630536758612922,
+        0.9676002327214902
+      ],
+      "vocabulary": 23356,
+      "mean_tokens_per_doc": 169.2,
+      "seconds": 2.5
+    },
+    "S8": {
+      "label": "+ stopwords full list + stemmed",
+      "macro_f1_mean": 0.963412042080007,
+      "macro_f1_std": 0.006311904712783885,
+      "folds": [
+        0.9745207105638366,
+        0.9558363477529994,
+        0.9653149188820139,
+        0.960771147599267,
+        0.9606170856019176
+      ],
+      "vocabulary": 21224,
+      "mean_tokens_per_doc": 169.2,
+      "seconds": 2.5
+    },
+    "length_only_cleaned": {
+      "label": "length only, cleaned text",
+      "macro_f1_mean": 0.46982702547201055,
+      "macro_f1_std": 0.02600995104825961,
+      "raw_text_reference": 0.4386
+    }
+  },
+  "best_condition": "S2",
+  "worst_condition": "S8",
+  "spread": 0.0041650439500073855,
+  "mean_fold_std": 0.004909669036706351,
+  "within_one_std_of_best": [
+    "S0",
+    "S1",
+    "S2",
+    "S3",
+    "S4",
+    "S5",
+    "S6",
+    "S7",
+    "S8"
+  ],
+  "chosen_condition": "S7",
+  "chosen_rationale": "All conditions tie within noise. Chosen on stated secondary criteria: readable features for phases 8 and 9, a 15.5 percent smaller vocabulary and 43 percent fewer tokens per document than the baseline. Stemming is rejected despite a smaller vocabulary because it destroys interpretability."
+}

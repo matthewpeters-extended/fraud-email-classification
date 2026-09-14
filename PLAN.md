@@ -4,7 +4,7 @@ Multi class text classification that sorts raw email bodies into Normal, Spam an
 the Fraud class is advance fee and wire transfer solicitation. Built as a resume portfolio piece
 with an honest evaluation protocol rather than a headline accuracy number.
 
-Status: phases 1 to 5 complete and verified. Phases 6 to 11 outstanding.
+Status: phases 1 to 6 complete and verified. Phases 7 to 11 outstanding.
 Created 2026 09 14.
 Scope locked with Matthew: three classes, scripts as the primary artefact.
 
@@ -143,12 +143,16 @@ signal is genuine and interpretable: 419 geography and narrative for fraud, prod
 vocabulary and deliberate misspellings for spam, the vocabulary of doing a job for normal.
 Detail in `docs/phase5_findings.md`.
 
-**Phase 6. Preprocessing pipeline.** Lowercasing, punctuation and digit removal, stopword
-removal, lemmatisation. Implemented as a scikit learn transformer so it lives inside the
-pipeline and cannot leak.
+**Phase 6. Preprocessing pipeline.** Complete. Every step is a scikit learn transformer
+inside the pipeline. Nine conditions ablated; none changes macro F1. The chosen pipeline is
+normalise, strip markers, remove stopwords, lemmatise, selected on interpretability and
+feature space size rather than score. Detail in `docs/phase6_findings.md`.
 
-**Phase 7. Baselines.** Majority class, stratified random, and a single keyword rule. Nothing
-gets reported later without these sitting next to it.
+**Phase 7. Baselines.** Majority class at 0.1667 macro F1, stratified random, a single
+keyword rule, document length only at 0.4698, provenance markers only at 0.6082, and
+formatting only at 0.7013. The last of those is the real bar: a model has to clear 0.7013
+before it has demonstrated anything about reading email. Nothing gets reported later without
+these sitting next to it.
 
 **Phase 8. Model sweep.** Naive Bayes, Logistic Regression, Linear SVM, Random Forest, KNN and a
 voting ensemble, crossed with CountVectorizer and TF IDF. Stratified five fold cross validation
@@ -350,3 +354,31 @@ blocklisted token appeared in the discriminative ranking, which cannot fail beca
 pipeline strips them first. It passed, reported success, and missed eight genuine provenance
 markers sitting in plain sight in its own output. Logged as D14. Detail in
 `docs/phase5_findings.md`.
+
+### Phase 6
+
+Complete and verified. 143 tests passing. The phase level result is negative and worth
+stating plainly: **no preprocessing step changes macro F1.** The spread across nine ablated
+conditions is 0.0042 against a mean fold standard deviation of 0.0049, so every condition
+sits inside the noise.
+
+The chosen pipeline is normalise, strip markers, remove stopwords with the plain list, and
+lemmatise. It was selected on stated secondary criteria, readable features for phases 8 and
+9 plus a 15.5 percent smaller vocabulary and 43 percent fewer tokens, not on score.
+Stemming was rejected despite the smallest vocabulary because `beneficiari` and `busi`
+would make the later write ups unreadable. The configuration lives in
+`src.preprocess.CHOSEN_CONFIG` so later phases cannot drift from it.
+
+A hypothesis of ours failed: holding pronouns such as `i`, `am` and `my` back from the
+stopword list, on the theory that first person register distinguishes advance fee fraud,
+scores 0.9657 against 0.9676 for the plain list. No evidence for it, and the direction is
+opposite to the prediction. Logged as D17.
+
+Two defects caught before they reached a result. D15: the lemmatiser produced `wa`, `ha`,
+`u`, `a` and turned `mrs` into `mr`, which would have silently destroyed a term appearing
+in 126 training documents at 96 percent fraud purity. D16: the transformers never set a
+fitted attribute, so `fit_transform` worked and every cross validation passed, while the fit
+then transform pattern phase 9 uses to score the test set would have raised NotFittedError.
+
+D11 is closed: length only is 0.4698 on cleaned text against 0.4386 on raw, confirming the
+phase 5 prediction. Detail in `docs/phase6_findings.md`.
