@@ -140,3 +140,58 @@ little headroom. Any future increase in class size is constrained by spam, not b
 Data is present, checksummed and counted. Two critical leaks are identified and quantified
 before a single model has been trained, which is the correct order to do this in. Phase 2 may
 proceed to parsing the fraud mailbox.
+
+## Phase 2: parse the fraud mailbox
+
+Detail and tables in `docs/phase2_findings.md`. Counts in
+`data/interim/phase2_parse_report.json`.
+
+### D1 update. Message count resolved at 3,978. Closed.
+
+Phase 1 left the count open. Phase 2 settles it. Splitting on the full mbox envelope pattern
+yields 3,978 messages. Two envelope lines do not carry the `From r` prefix, at lines 72,425 and
+285,198, so any parser keyed on that literal loses two messages and corrupts two more.
+
+The reference claim of 4,075 is wrong. The commonly cited 3,977 is wrong by one. The naive
+prefix split at 3,976 is wrong by two. Of those 3,978, exactly 3,976 yield a usable body, which
+coincidentally equals the naive figure. The agreement is a coincidence and not a validation.
+
+### D4 update. MIME artifact half resolved.
+
+Parsing through the standard library email module decodes quoted printable payloads. Occurrences
+of `=20` fall from 6,423 in the raw mailbox to 9 in the parsed bodies, a 99.9 percent reduction,
+and the survivors are literal body text rather than artifacts. The casing and punctuation
+spacing half of D4 remains open and is handled by normalisation at phase 6.
+
+### D6. Label noise inside the fraud corpus. Severity: low, accepted.
+
+The corpus is presented as advance fee fraud but carries a little ordinary spam. Across the 3,976
+usable messages, measured by keyword signature: 93.8 percent advance fee, 0.1 percent pharmacy or
+replica goods, 0.2 percent both, 5.9 percent neither strong signature. Two messages are
+unambiguously pharmacy spam, one of which is among the two unusable records.
+
+Decision: accepted without action. At 0.1 percent this sits far below the resolution of any
+metric we will report. Recorded so the README does not overclaim corpus purity.
+
+### D7. Heavy duplication inside the fraud corpus. Severity: high, open.
+
+The measurement behind `PLAN.md` 8.3.
+
+<table>
+<tr><th>Match rule</th><th>Unique</th><th>Redundant copies</th><th>Share</th><th>Largest group</th></tr>
+<tr><td>Exact body</td><td>3,298</td><td>678</td><td>17.1 percent</td><td>13</td></tr>
+<tr><td>Case and punctuation normalised</td><td>3,257</td><td>719</td><td>18.1 percent</td><td>16</td></tr>
+<tr><td>First 200 normalised characters</td><td>2,985</td><td>991</td><td>24.9 percent</td><td>20</td></tr>
+</table>
+
+One in six fraud messages is byte identical to another. The reference draws 1,000 messages from
+this pool and then splits train and test, so copies of the same message sit on both sides and
+part of its reported score is memorisation.
+
+Decision: phase 3 deduplicates before sampling, and clusters near duplicates so that a cluster
+never spans the train and test split. The size of the correction is reported.
+
+### Phase 2 verdict
+
+3,978 messages located, 3,976 parsed to usable bodies, 23 tests passing. One defect closed, one
+half resolved, two new ones logged. Phase 3 may proceed to corpus construction.

@@ -23,8 +23,31 @@ cd "$REPO_ROOT"
 echo "==> repository: $REPO_ROOT"
 git add -A
 
+NOTHING_STAGED=0
 if git diff --cached --quiet; then
-  echo "nothing staged, working tree matches HEAD. Nothing to push." >&2
+  NOTHING_STAGED=1
+  echo "==> nothing new to commit, working tree matches HEAD"
+  echo "==> checking for commits not yet on origin"
+fi
+
+if [ "$NOTHING_STAGED" -eq 1 ]; then
+  BRANCH="$(git rev-parse --abbrev-ref HEAD)"
+  if git rev-parse --verify --quiet "origin/${BRANCH}" >/dev/null; then
+    AHEAD="$(git rev-list --count "origin/${BRANCH}..HEAD")"
+  else
+    AHEAD="$(git rev-list --count HEAD)"
+    echo "    origin/${BRANCH} does not exist yet, this will be the first push"
+  fi
+  if [ "$AHEAD" -eq 0 ]; then
+    echo "already up to date with origin. Nothing to do."
+    exit 0
+  fi
+  echo "    ${AHEAD} commit(s) to push:"
+  git log --oneline "@{u}..HEAD" 2>/dev/null || git log --oneline -n "$AHEAD"
+  echo
+  echo "==> pushing ${BRANCH} to origin"
+  git push -u origin "${BRANCH}"
+  echo "==> done."
   exit 0
 fi
 

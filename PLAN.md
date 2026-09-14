@@ -4,7 +4,7 @@ Multi class text classification that sorts raw email bodies into Normal, Spam an
 the Fraud class is advance fee and wire transfer solicitation. Built as a resume portfolio piece
 with an honest evaluation protocol rather than a headline accuracy number.
 
-Status: phase 1 complete and verified. Phases 2 to 11 outstanding.
+Status: phases 1 and 2 complete and verified. Phases 3 to 11 outstanding.
 Created 2026 09 14.
 Scope locked with Matthew: three classes, scripts as the primary artefact.
 
@@ -122,9 +122,10 @@ fraud-email-classification/
 **Phase 1. Acquire and verify.** Download `Datasets.zip`, checksum it, extract to `data/raw`,
 confirm the two source files and their row counts against section 4.
 
-**Phase 2. Parse the fraud corpus.** `fraudulent_emails.txt` is a single concatenated mailbox
-style text file, not a CSV. Split it into individual messages, strip the headers, keep the body.
-Record how many messages parse cleanly and how many are malformed.
+**Phase 2. Parse the fraud corpus.** Complete. `fradulent_emails.txt` is a single concatenated
+mailbox, not a CSV. Split on the mbox envelope pattern, not on the literal string "From r" which
+loses two messages. True count is 3,978, of which 3,976 yield usable bodies. Detail in
+`docs/phase2_findings.md`.
 
 **Phase 3. Build the corpus.** Sample 1,000 per class with a fixed random seed, assemble
 `final_dataset.csv` with columns for text and label, and write a data dictionary.
@@ -257,8 +258,19 @@ rather than the content is the kind of thing an interviewer actually wants to he
 3. Scripts as the primary artefact, `src/` modules plus entry points under `scripts/`. Notebooks
    are for exploration only and are not the deliverable.
 
-## 12. Phase 1 result
+## 12. Phase results
+
+### Phase 1
 
 Complete and verified. Archive checksummed, contents corrected against the reference README,
 counts reproduced, and five data defects logged in `docs/data_defects.md` including two critical
 leaks found before any model was trained. Detail in D0 through D5.
+
+### Phase 2
+
+Complete and verified. Mailbox parsed to 3,976 usable messages from 3,978 envelopes, 23 tests
+passing. Every message count previously on record was wrong, including the reference README's
+4,075 and the commonly cited 3,977. Quoted printable decoding resolved 99.9 percent of the MIME
+artifact half of D4. Two new defects logged: D6 label noise at 0.1 percent, accepted, and D7
+duplication at 17.1 percent exact matches, which is the measurement confirming 8.3 and changes
+how phase 3 must sample. Detail in `docs/phase2_findings.md`.
