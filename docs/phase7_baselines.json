@@ -1,0 +1,250 @@
+{
+  "phase": 7,
+  "recorded_utc": "2026-09-14T15:08:09+00:00",
+  "seed": 20260914,
+  "folds": 5,
+  "train_size": 2160,
+  "scoring": "f1_macro",
+  "results": {
+    "B0": {
+      "label": "most frequent class",
+      "macro_f1_mean": 0.16666666666666666,
+      "macro_f1_std": 0.0,
+      "folds": [
+        0.16666666666666666,
+        0.16666666666666666,
+        0.16666666666666666,
+        0.16666666666666666,
+        0.16666666666666666
+      ],
+      "note": ""
+    },
+    "B1": {
+      "label": "stratified random, from the training distribution",
+      "macro_f1_mean": 0.33549912511595775,
+      "macro_f1_std": 0.0,
+      "folds": [
+        0.33549912511595775,
+        0.33549912511595775,
+        0.33549912511595775,
+        0.33549912511595775,
+        0.33549912511595775
+      ],
+      "note": ""
+    },
+    "B2": {
+      "label": "uniform random",
+      "macro_f1_mean": 0.31467311506191203,
+      "macro_f1_std": 0.0,
+      "folds": [
+        0.31467311506191203,
+        0.31467311506191203,
+        0.31467311506191203,
+        0.31467311506191203,
+        0.31467311506191203
+      ],
+      "note": ""
+    },
+    "B3": {
+      "label": "document length only, on the chosen phase 6 pipeline",
+      "macro_f1_mean": 0.44534981020890607,
+      "macro_f1_std": 0.040947095525777244,
+      "folds": [
+        0.46950017611434935,
+        0.49403110651196364,
+        0.4691017619561309,
+        0.38701156299840517,
+        0.4071044434636814
+      ],
+      "note": "the representation the model actually sees, see D11"
+    },
+    "B3b": {
+      "label": "document length only, normalised and stripped only",
+      "macro_f1_mean": 0.46982702547201055,
+      "macro_f1_std": 0.02600995104825961,
+      "folds": [
+        0.4872551749744732,
+        0.5093055700107106,
+        0.4375146238813681,
+        0.4482089086276524,
+        0.46685084986584835
+      ],
+      "note": "the phase 6 measurement, kept for continuity"
+    },
+    "B4": {
+      "label": "provenance markers only, 42 tokens",
+      "macro_f1_mean": 0.6082129477671406,
+      "macro_f1_std": 0.02694369508296433,
+      "folds": [
+        0.6114630562556825,
+        0.5909201671930004,
+        0.5941212034470943,
+        0.6591980385421087,
+        0.5853622733978175
+      ],
+      "note": "content discarded, see D3"
+    },
+    "B5": {
+      "label": "formatting only, seven numeric features",
+      "macro_f1_mean": 0.701319517656295,
+      "macro_f1_std": 0.020194157294929956,
+      "folds": [
+        0.6739600513102437,
+        0.6922135611057404,
+        0.7169236718712234,
+        0.7310695102493211,
+        0.692430793744946
+      ],
+      "note": "no words at all, see D4"
+    },
+    "B6": {
+      "label": "keyword rule, 5 words per class",
+      "macro_f1_mean": 0.41814231633073123,
+      "macro_f1_std": 0.017447677141810936,
+      "folds": [
+        0.42792837060336236,
+        0.41311365198004874,
+        0.44003367948358124,
+        0.42165158265420577,
+        0.38798429693245806
+      ],
+      "note": "decision list on word presence",
+      "coverage": 0.22824074074074074,
+      "example_keywords": {
+        "FRAUD": [
+          "senegal",
+          "5m",
+          "dakar",
+          "dormant",
+          "hospital"
+        ],
+        "NORMAL": [
+          "derivative",
+          "dinner",
+          "agenda",
+          "waco",
+          "leppard"
+        ],
+        "SPAM": [
+          "andmanyother",
+          "viagra",
+          "mailing",
+          "shlpplng",
+          "va"
+        ]
+      }
+    },
+    "B7": {
+      "label": "keyword rule, 10 words per class",
+      "macro_f1_mean": 0.4600479736353108,
+      "macro_f1_std": 0.013527142880788065,
+      "folds": [
+        0.4613704279593435,
+        0.4414643327686805,
+        0.4734658506201592,
+        0.4757607930192571,
+        0.44817846380911375
+      ],
+      "note": "decision list on word presence",
+      "coverage": 0.3060185185185185,
+      "example_keywords": {
+        "FRAUD": [
+          "senegal",
+          "5m",
+          "dakar",
+          "dormant",
+          "hospital",
+          "ghana",
+          "ivory",
+          "liberia"
+        ],
+        "NORMAL": [
+          "derivative",
+          "dinner",
+          "agenda",
+          "waco",
+          "leppard",
+          "ena",
+          "carr",
+          "ravi"
+        ],
+        "SPAM": [
+          "andmanyother",
+          "viagra",
+          "mailing",
+          "shlpplng",
+          "va",
+          "oniine",
+          "sighting",
+          "miiiion"
+        ]
+      }
+    },
+    "B8": {
+      "label": "keyword rule, 25 words per class",
+      "macro_f1_mean": 0.5737385434453188,
+      "macro_f1_std": 0.01407447884326967,
+      "folds": [
+        0.5932325206062535,
+        0.5513465222516947,
+        0.5789425366606888,
+        0.578882265156775,
+        0.5662888725511821
+      ],
+      "note": "decision list on word presence",
+      "coverage": 0.5152777777777777,
+      "example_keywords": {
+        "FRAUD": [
+          "senegal",
+          "5m",
+          "dakar",
+          "dormant",
+          "hospital",
+          "ghana",
+          "ivory",
+          "liberia"
+        ],
+        "NORMAL": [
+          "derivative",
+          "dinner",
+          "agenda",
+          "waco",
+          "leppard",
+          "ena",
+          "carr",
+          "ravi"
+        ],
+        "SPAM": [
+          "andmanyother",
+          "viagra",
+          "mailing",
+          "shlpplng",
+          "va",
+          "oniine",
+          "sighting",
+          "miiiion"
+        ]
+      }
+    },
+    "MODEL": {
+      "label": "phase 6 pipeline with logistic regression",
+      "macro_f1_mean": 0.9662104427210935,
+      "macro_f1_std": 0.004525019143480303,
+      "folds": [
+        0.9745207105638366,
+        0.9628538916126486,
+        0.9630237028461993,
+        0.9630536758612922,
+        0.9676002327214902
+      ],
+      "note": "the thing the baselines exist to be compared against"
+    }
+  },
+  "bar_to_clear": {
+    "key": "B5",
+    "macro_f1": 0.701319517656295,
+    "label": "formatting only, seven numeric features"
+  },
+  "random_floor": 0.33549912511595775,
+  "majority_floor": 0.16666666666666666
+}

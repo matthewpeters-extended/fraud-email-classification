@@ -478,3 +478,54 @@ The phase level finding is a negative one worth stating plainly: no preprocessin
 changes macro F1. The spread across nine conditions is 0.0042 against a fold standard
 deviation of 0.0049. The chosen pipeline was selected on stated secondary criteria,
 interpretability and feature space size, not on score. Phase 7 may proceed to baselines.
+
+## Phase 7: baselines
+
+Detail and the canonical table in `docs/phase7_findings.md`. Numbers in
+`docs/phase7_baselines.json`.
+
+### D18. We quoted the wrong floor for four phases. Severity: medium, corrected.
+
+Phases 4 through 6 reported 0.1667 as the macro F1 floor, being the score of a classifier
+that always predicts one class. It is not the floor.
+
+<table>
+<tr><th>Trivial strategy</th><th>Macro F1</th></tr>
+<tr><td>Most frequent class</td><td>0.1667</td></tr>
+<tr><td>Uniform random</td><td>0.3147</td></tr>
+<tr><td>Stratified random</td><td>0.3355</td></tr>
+</table>
+
+Random guessing beats always predicting one class by 0.1688, more than double. Macro F1
+averages per class F1: a single class predictor scores 0.5 on its class and 0.0 on the other
+two, while random guessing scores about a third on all three.
+
+The consequence is not cosmetic. Phase 4 described the formatting probe as 4.21 times the
+majority baseline. Against the correct floor it is 2.09 times. A multiple against a badly
+chosen denominator flatters every result.
+
+Decision: quote random at 0.3355 as the trivial floor and formatting only at 0.7013 as the
+bar in every later table. The majority figure stays for completeness, labelled as what it
+is. A test asserts that the random floor exceeds the majority floor so the point cannot be
+quietly lost.
+
+### D11 note. Two length measurements, both reported.
+
+B3 measures length on the chosen phase 6 pipeline at 0.4453. B3b measures it on
+normalisation and stripping only at 0.4698, which is the figure phase 6 reported before the
+stopword step was chosen. Stopword removal cuts tokens per document by 43 percent, so these
+are the same idea on different text.
+
+B3 is the operative figure because it is what the model sees. B3b is retained so the phase 6
+write up stays traceable. B3 also carries the widest standard deviation of any baseline at
+0.0409, about nine times the model's, which is a reason not to over read small differences
+among the weak baselines.
+
+### Phase 7 verdict
+
+The baseline suite is fixed and loadable by later phases through
+`src.baselines.load_baselines()` and `bar_to_clear()`, read from the report rather than
+hardcoded so numbers cannot drift. One new entry, D18, corrected. 162 tests passing.
+
+The bar a model must clear is 0.7013, set by formatting alone. The phase 6 pipeline clears
+it by 0.2649. Phase 8 may proceed to the model sweep.

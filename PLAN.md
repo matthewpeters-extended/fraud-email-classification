@@ -4,7 +4,7 @@ Multi class text classification that sorts raw email bodies into Normal, Spam an
 the Fraud class is advance fee and wire transfer solicitation. Built as a resume portfolio piece
 with an honest evaluation protocol rather than a headline accuracy number.
 
-Status: phases 1 to 6 complete and verified. Phases 7 to 11 outstanding.
+Status: phases 1 to 7 complete and verified. Phases 8 to 11 outstanding.
 Created 2026 09 14.
 Scope locked with Matthew: three classes, scripts as the primary artefact.
 
@@ -148,11 +148,10 @@ inside the pipeline. Nine conditions ablated; none changes macro F1. The chosen 
 normalise, strip markers, remove stopwords, lemmatise, selected on interpretability and
 feature space size rather than score. Detail in `docs/phase6_findings.md`.
 
-**Phase 7. Baselines.** Majority class at 0.1667 macro F1, stratified random, a single
-keyword rule, document length only at 0.4698, provenance markers only at 0.6082, and
-formatting only at 0.7013. The last of those is the real bar: a model has to clear 0.7013
-before it has demonstrated anything about reading email. Nothing gets reported later without
-these sitting next to it.
+**Phase 7. Baselines.** Complete. Nine baselines from most frequent class through a learned
+keyword rule to the three content free shortcuts, plus the phase 6 pipeline for context.
+The trivial floor is random at 0.3355, not majority at 0.1667. The bar to clear is
+formatting only at 0.7013. Detail in `docs/phase7_findings.md`.
 
 **Phase 8. Model sweep.** Naive Bayes, Logistic Regression, Linear SVM, Random Forest, KNN and a
 voting ensemble, crossed with CountVectorizer and TF IDF. Stratified five fold cross validation
@@ -239,12 +238,13 @@ Decided in advance so it cannot be tuned after seeing results.
   recorded in `data/processed/phase3_build_report.json`
 * Test split is touched exactly once, in phase 9
 * Model selection: stratified five fold cross validation on the training split, macro F1
-* Headline metric: macro F1 on the holdout, always quoted next to the majority baseline of
-  0.1667 macro F1 and next to the formatting only probe at 0.7013, which is the real bar a
-  model has to clear
+* Headline metric: macro F1 on the holdout, always quoted next to the trivial floor of
+  0.3355, which is random guessing, and next to the formatting only probe at 0.7013, which
+  is the real bar a model has to clear
 * Secondary: per class precision, recall and F1, confusion matrix, and Fraud class recall at a
-  fixed precision target. The majority baseline for macro F1 is 0.1667, not 0.333. The 0.333
-  figure is accuracy, and quoting it as the macro F1 floor understates every model
+  fixed precision target. Note two separate traps here. The 0.333 figure often quoted is
+  accuracy, not macro F1. And the majority class score of 0.1667 is not the macro F1 floor
+  either, because random guessing scores 0.3355. Quote random as the floor
 * Everything reported twice, once on the raw corpus and once with source marker tokens removed
 
 Success is not a high number. Success is a defensible number with the leakage quantified and the
@@ -382,3 +382,29 @@ then transform pattern phase 9 uses to score the test set would have raised NotF
 
 D11 is closed: length only is 0.4698 on cleaned text against 0.4386 on raw, confirming the
 phase 5 prediction. Detail in `docs/phase6_findings.md`.
+
+### Phase 7
+
+Complete and verified. 162 tests passing. The canonical baseline table is in
+`docs/phase7_baselines.json` and is loaded by later phases through
+`src.baselines.load_baselines()`, so no figure can drift by being retyped.
+
+<table>
+<tr><th>Baseline</th><th>Macro F1</th></tr>
+<tr><td>most frequent class</td><td>0.1667</td></tr>
+<tr><td>stratified random</td><td>0.3355</td></tr>
+<tr><td>keyword rule, 25 words per class</td><td>0.5737</td></tr>
+<tr><td>provenance markers only</td><td>0.6082</td></tr>
+<tr><td><b>formatting only, the bar to clear</b></td><td><b>0.7013</b></td></tr>
+<tr><td>phase 6 pipeline, for context</td><td>0.9662</td></tr>
+</table>
+
+The keyword rule learns its words inside each fold rather than being hand picked, which is
+what makes it a baseline rather than a cheat, and it is reported with coverage: at 25 words
+per class it fires on 51.5 percent of documents and reaches 0.5737. Seventy five words get
+most of the way to the marker probe.
+
+A correction we owed: phases 4 to 6 quoted 0.1667 as the floor, but random guessing scores
+0.3355, more than double. Macro F1 punishes a single class predictor harder than it punishes
+chance. Phase 4's claim that formatting alone is "4.21 times the majority baseline" is 2.09
+times against the correct floor. Logged as D18. Detail in `docs/phase7_findings.md`.
