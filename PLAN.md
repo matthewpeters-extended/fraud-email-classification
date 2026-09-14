@@ -4,7 +4,7 @@ Multi class text classification that sorts raw email bodies into Normal, Spam an
 the Fraud class is advance fee and wire transfer solicitation. Built as a resume portfolio piece
 with an honest evaluation protocol rather than a headline accuracy number.
 
-Status: phases 1 to 8 complete and verified. Phases 9 to 11 outstanding.
+Status: phases 1 to 9 complete and verified. Phases 10 and 11 outstanding.
 Created 2026 09 14.
 Scope locked with Matthew: three classes, scripts as the primary artefact.
 
@@ -158,13 +158,16 @@ nested cross validation so no reported number was tuned on the data it reports. 
 soft voting ensemble on tfidf at 0.9740, though multinomial naive Bayes at 0.9721 is inside
 the noise for a sixth of the compute. Detail in `docs/phase8_findings.md`.
 
-**Phase 9. Holdout evaluation and error analysis.** Single final scoring on the untouched test
-split. Confusion matrix, per class precision, recall and F1, macro F1. Then read the actual
-misclassified emails and write up what they have in common.
+**Phase 9. Holdout evaluation and error analysis.** Complete. Two pre committed
+configurations scored once on the 540 document test split. Headline macro F1 0.9684, zero
+fraud emails reaching the inbox, and 10 of 17 errors adjudicated as the model being right and
+the corpus label being wrong. Detail in `docs/phase9_findings.md`.
 
 **Phase 10. Fraud class deep dive.** Treat Fraud as the positive class. Precision and recall
 tradeoff, threshold selection under an asymmetric cost assumption, and a stated view on where
-the operating point should sit.
+the operating point should sit. Note going in that phase 9 already recorded zero fraud emails
+reaching the inbox at the default threshold, so the interesting question is how much precision
+headroom exists rather than whether recall can be improved.
 
 **Phase 11. Write up.** WALKTHROUGH.md, then README.md last with real numbers.
 
@@ -417,11 +420,11 @@ validation, outer five folds for scoring and inner three for the hyperparameter 
 
 <table>
 <tr><th>Rank</th><th>Configuration</th><th>Nested macro F1</th></tr>
-<tr><td>1</td><td>voting ensemble, tfidf</td><td>0.9740 +/- 0.0027</td></tr>
-<tr><td>2</td><td>multinomial naive Bayes, tfidf</td><td>0.9721 +/- 0.0049</td></tr>
-<tr><td>3</td><td>linear SVM, tfidf</td><td>0.9703 +/- 0.0050</td></tr>
-<tr><td>13</td><td>random forest, tfidf</td><td>0.9507 +/- 0.0157</td></tr>
-<tr><td>14</td><td>k nearest neighbours, count</td><td>0.8943 +/- 0.0154</td></tr>
+<tr><td>1</td><td>voting ensemble, tfidf</td><td>0.9740 ± 0.0027</td></tr>
+<tr><td>2</td><td>multinomial naive Bayes, tfidf</td><td>0.9721 ± 0.0049</td></tr>
+<tr><td>3</td><td>linear SVM, tfidf</td><td>0.9703 ± 0.0050</td></tr>
+<tr><td>13</td><td>random forest, tfidf</td><td>0.9507 ± 0.0157</td></tr>
+<tr><td>14</td><td>k nearest neighbours, count</td><td>0.8943 ± 0.0154</td></tr>
 </table>
 
 Only two of fourteen configurations sit within one standard deviation of the winner, and the

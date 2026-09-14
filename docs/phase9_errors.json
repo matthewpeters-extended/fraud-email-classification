@@ -1,0 +1,180 @@
+{
+  "errors": [
+    {
+      "index": 38,
+      "true": "FRAUD",
+      "predicted": "SPAM",
+      "words_raw": 24,
+      "words_cleaned": 19,
+      "excerpt": "Want to be BETTER then pornstar? Amaze youre girlfriend http://behyr.com/et/ you will become. Good Lord, Josh muttered. own journey would begin. *** Sable was",
+      "verdict": "label_wrong",
+      "reason": "pornographic spam sitting in the fraud corpus, this is D6"
+    },
+    {
+      "index": 171,
+      "true": "FRAUD",
+      "predicted": "SPAM",
+      "words_raw": 221,
+      "words_cleaned": 148,
+      "excerpt": "US Bank Alert Message We recently reviewed your account, and we suspect an unauthorized ATM - based transactions on your account. Therefore, as a preventive measure we have temporary limited your access to sensitive US Bank features. To ensure that your account is not compromised please login to US ",
+      "verdict": "model_wrong",
+      "reason": "genuine bank phishing, which belongs in the fraud class"
+    },
+    {
+      "index": 193,
+      "true": "SPAM",
+      "predicted": "FRAUD",
+      "words_raw": 376,
+      "words_cleaned": 308,
+      "excerpt": "de la part des enfants ama rue des martyrs , avenue delafosse 01 b p 124 abidjan 01 republique de cote d ' ivoire contact : ( 00225 ) 05 80 75 51 proposition d ? affaires bonjour , avec respect et humilit? , j ? ai d?cid? de vous informer d ? une proposition d ? affaires qui sera tr?s b?n?fique pour",
+      "verdict": "label_wrong",
+      "reason": "advance fee fraud in French, labelled spam"
+    },
+    {
+      "index": 210,
+      "true": "SPAM",
+      "predicted": "NORMAL",
+      "words_raw": 120,
+      "words_cleaned": 69,
+      "excerpt": "undeliverable : home based business for grownups your message subject : home based business for grownups sent : sun , 21 jan 2001 09 : 24 : 27 + 0100 did not reach the following recipient ( s ) : 75 @ tfi . kpn . com on mon , 25 feb 2002 13 : 32 : 23 + 0100 the recipient name is not recognized the m",
+      "verdict": "ambiguous",
+      "reason": "a bounce notice about a spam message, not itself spam"
+    },
+    {
+      "index": 212,
+      "true": "SPAM",
+      "predicted": "FRAUD",
+      "words_raw": 236,
+      "words_cleaned": 104,
+      "excerpt": "i need your help dear sir , in view of my difficulties and problems in this country , i ' m so pleased to have found someone like you in whom i can confide or at least talk to . my name is stella johnson , a freetown , sierra leone . i am here in senegal as a refugee . i arrived here a year ago duri",
+      "verdict": "label_wrong",
+      "reason": "advance fee fraud from Sierra Leone, labelled spam"
+    },
+    {
+      "index": 225,
+      "true": "SPAM",
+      "predicted": "FRAUD",
+      "words_raw": 489,
+      "words_cleaned": 221,
+      "excerpt": "investment offer from joseph otisa investment offer from joseph otisa compliments of the season , my name is mr . joseph otisa , the branch manager of allstates trust bank of nigeria plc lagos state branch . i am writing in respect of a foreign customer of my bank ( mr . wahab daniel ) with account ",
+      "verdict": "label_wrong",
+      "reason": "advance fee fraud, a Nigerian bank branch manager, labelled spam"
+    },
+    {
+      "index": 238,
+      "true": "SPAM",
+      "predicted": "FRAUD",
+      "words_raw": 523,
+      "words_cleaned": 208,
+      "excerpt": "charity sees the need not the cost . . . dear friend , as you read this , i don ' t want you to feel sorry for me , because , i believe everyone will die someday . my name is mr . reza abdulla , a merchant in safat , in ( kuwait ) i was married with two children . my wife and two children died in a ",
+      "verdict": "label_wrong",
+      "reason": "advance fee fraud, a dying merchant in Kuwait, labelled spam"
+    },
+    {
+      "index": 254,
+      "true": "SPAM",
+      "predicted": "NORMAL",
+      "words_raw": 54,
+      "words_cleaned": 26,
+      "excerpt": "out of office autoreply : just to her . . . i am on vacation week 29 + 30 + 31 . please contact gerd madsen ( gm @ torben - rafn . dk ) or hans chr . jensen ( hcj @ torben - rafn . dk your mail is not transfered .",
+      "verdict": "label_wrong",
+      "reason": "an out of office autoreply is not spam"
+    },
+    {
+      "index": 283,
+      "true": "SPAM",
+      "predicted": "FRAUD",
+      "words_raw": 408,
+      "words_cleaned": 155,
+      "excerpt": "from mrs fati dear , i crave your indulgence at this mail coming from somebody you have not know before . i decided to do this after praying over the situation . you should please consider the transaction on its content and not the fact that you have not known me before . i need not dwell on how i c",
+      "verdict": "label_wrong",
+      "reason": "advance fee fraud, labelled spam"
+    },
+    {
+      "index": 306,
+      "true": "SPAM",
+      "predicted": "NORMAL",
+      "words_raw": 196,
+      "words_cleaned": 96,
+      "excerpt": "http : / / www . virtu ally - anywhere . com / sports / hello , i was hoping you could help me . the link above takes you to several facility stadiumtours created by virtually anywhere interactive . i would like to introduce the concept of a virtual tour to the appropriate people at your organizatio",
+      "verdict": "model_wrong",
+      "reason": "an unsolicited marketing approach, correctly spam"
+    },
+    {
+      "index": 311,
+      "true": "SPAM",
+      "predicted": "FRAUD",
+      "words_raw": 406,
+      "words_cleaned": 188,
+      "excerpt": "[ ilug ] deal subject : urgent concern pls . i am a serious officer with one of our main branches of citi bank , consumer banking department . although we didn ' t have previous correspondence till date . however , based on the standard value place on everything about you , i believed we could discu",
+      "verdict": "label_wrong",
+      "reason": "advance fee fraud from a claimed Citibank officer, labelled spam"
+    },
+    {
+      "index": 317,
+      "true": "SPAM",
+      "predicted": "FRAUD",
+      "words_raw": 362,
+      "words_cleaned": 176,
+      "excerpt": "request for assistance barrister adewale coker chambers legal practitioners / notary public blk 804 - law house building lagos - nigeria . for your kind attention , request for assistance it is my humble pleasure to write you this letter irrespective of the fact that you do not know me . however , i",
+      "verdict": "label_wrong",
+      "reason": "advance fee fraud from a claimed Lagos barrister, labelled spam"
+    },
+    {
+      "index": 346,
+      "true": "SPAM",
+      "predicted": "FRAUD",
+      "words_raw": 230,
+      "words_cleaned": 122,
+      "excerpt": "foreign business representative needed mr . zhongxun zheng anhui guofeng plastic industry co . , ltd tian zhi road hefei , anh 230088 china . website : www . guofeng . com dear sir / madam , i am mr . zhongxun zheng , board director , anhui guofeng plastic industry . we are a company who deal on pla",
+      "verdict": "label_wrong",
+      "reason": "advance fee solicitation, labelled spam"
+    },
+    {
+      "index": 383,
+      "true": "NORMAL",
+      "predicted": "SPAM",
+      "words_raw": 1059,
+      "words_cleaned": 568,
+      "excerpt": "data for moody ' s riskcalc craig and kim , as you know , i have obtained a 60 day trial subscription to moody ' s riskcalc . you wanted to know if it makes sense for enron to purchase riskcalc . well , after plowing through their 100 page manual and sitting through today ' s 2 - hour moody ' s pres",
+      "verdict": "model_wrong",
+      "reason": "internal mail about a trial subscription, reads as marketing"
+    },
+    {
+      "index": 402,
+      "true": "NORMAL",
+      "predicted": "SPAM",
+      "words_raw": 893,
+      "words_cleaned": 406,
+      "excerpt": "you are now subscribed to the frbnyrmagl list mon , 18 sep 2000 18 : 42 : 47 your subscription to the frbnyrmagl list ( federal reserve bank of ny research publications ) has been accepted . please save this message for future reference , especially if this is the first time you are subscribing to a",
+      "verdict": "ambiguous",
+      "reason": "a mailing list confirmation, which is what spam also looks like"
+    },
+    {
+      "index": 407,
+      "true": "NORMAL",
+      "predicted": "SPAM",
+      "words_raw": 34,
+      "words_cleaned": 20,
+      "excerpt": "cusip david , the cusip of the bond i have is 694308 efo pgc 8 . 375 % 5 / 1 / 25 lst & ref mortgage bond , ser 92 b . vince",
+      "verdict": "model_wrong",
+      "reason": "a bond reference containing the word mortgage, a top spam term"
+    },
+    {
+      "index": 466,
+      "true": "NORMAL",
+      "predicted": "SPAM",
+      "words_raw": 118,
+      "words_cleaned": 45,
+      "excerpt": "summer offer bhala , i double checked with hr , and the offer you received is in line with what we are offering to other graduate level summer interns . if you have better offers , i certainly wouldn ' t hold it against you for taking them over what we are offering , but we can ' t really justify ra",
+      "verdict": "model_wrong",
+      "reason": "an internship offer containing the word offer"
+    }
+  ],
+  "tally": {
+    "label_wrong": 10,
+    "model_wrong": 5,
+    "ambiguous": 2,
+    "unreviewed": 0
+  }
+}

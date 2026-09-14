@@ -1,0 +1,175 @@
+{
+  "phase": 9,
+  "recorded_utc": "2026-09-14T15:38:27+00:00",
+  "train_size": 2160,
+  "test_size": 540,
+  "bar_to_clear": 0.701319517656295,
+  "random_floor": 0.33549912511595775,
+  "scored": {
+    "headline": {
+      "model": "voting_ensemble",
+      "vectoriser": "tfidf",
+      "params": {
+        "clf__lr__C": "5.0",
+        "clf__nb__alpha": "0.1",
+        "vect__ngram_range": "(1, 2)"
+      },
+      "test_macro_f1": 0.9684305548141379,
+      "test_accuracy": 0.9685185185185186,
+      "nested_cv_estimate": 0.9740084165827743,
+      "nested_cv_std": 0.002714372466758518,
+      "holdout_minus_estimate": -0.005577861768636394,
+      "bootstrap_95_low": 0.9525680834082672,
+      "bootstrap_95_high": 0.9818501850453569,
+      "bootstrap_std": 0.007577837105731874,
+      "nested_estimate_inside_interval": true,
+      "per_class": {
+        "FRAUD": {
+          "precision": 0.956989247311828,
+          "recall": 0.9888888888888889,
+          "f1-score": 0.9726775956284153,
+          "support": 180.0
+        },
+        "SPAM": {
+          "precision": 0.9657142857142857,
+          "recall": 0.9388888888888889,
+          "f1-score": 0.952112676056338,
+          "support": 180.0
+        },
+        "NORMAL": {
+          "precision": 0.9832402234636871,
+          "recall": 0.9777777777777777,
+          "f1-score": 0.9805013927576601,
+          "support": 180.0
+        }
+      },
+      "confusion_matrix": [
+        [
+          178,
+          2,
+          0
+        ],
+        [
+          8,
+          169,
+          3
+        ],
+        [
+          0,
+          4,
+          176
+        ]
+      ],
+      "confusion_labels": [
+        "FRAUD",
+        "SPAM",
+        "NORMAL"
+      ],
+      "errors": 17,
+      "boundary_errors": {
+        "FRAUD and SPAM": 10,
+        "FRAUD and NORMAL": 0,
+        "SPAM and NORMAL": 7
+      },
+      "cost_weighted_errors": {
+        "fraud_reaches_inbox": 0,
+        "fraud_caught_as_spam": 2,
+        "legitimate_mail_lost_to_fraud": 0,
+        "legitimate_mail_lost_to_spam": 4,
+        "spam_misfiled": 11
+      }
+    },
+    "secondary": {
+      "model": "multinomial_nb",
+      "vectoriser": "tfidf",
+      "params": {
+        "clf__alpha": "0.1",
+        "vect__ngram_range": "(1, 2)"
+      },
+      "test_macro_f1": 0.9627504811502322,
+      "test_accuracy": 0.9629629629629629,
+      "nested_cv_estimate": 0.9721029161528953,
+      "nested_cv_std": 0.004917280874945874,
+      "holdout_minus_estimate": -0.00935243500266314,
+      "bootstrap_95_low": 0.945635116959169,
+      "bootstrap_95_high": 0.9777092523925548,
+      "bootstrap_std": 0.008186350164454107,
+      "nested_estimate_inside_interval": true,
+      "per_class": {
+        "FRAUD": {
+          "precision": 0.9567567567567568,
+          "recall": 0.9833333333333333,
+          "f1-score": 0.9698630136986301,
+          "support": 180.0
+        },
+        "SPAM": {
+          "precision": 0.9651162790697675,
+          "recall": 0.9222222222222223,
+          "f1-score": 0.9431818181818182,
+          "support": 180.0
+        },
+        "NORMAL": {
+          "precision": 0.9672131147540983,
+          "recall": 0.9833333333333333,
+          "f1-score": 0.9752066115702479,
+          "support": 180.0
+        }
+      },
+      "confusion_matrix": [
+        [
+          177,
+          3,
+          0
+        ],
+        [
+          8,
+          166,
+          6
+        ],
+        [
+          0,
+          3,
+          177
+        ]
+      ],
+      "confusion_labels": [
+        "FRAUD",
+        "SPAM",
+        "NORMAL"
+      ],
+      "errors": 20,
+      "boundary_errors": {
+        "FRAUD and SPAM": 11,
+        "FRAUD and NORMAL": 0,
+        "SPAM and NORMAL": 9
+      },
+      "cost_weighted_errors": {
+        "fraud_reaches_inbox": 0,
+        "fraud_caught_as_spam": 3,
+        "legitimate_mail_lost_to_fraud": 0,
+        "legitimate_mail_lost_to_spam": 3,
+        "spam_misfiled": 14
+      }
+    }
+  },
+  "error_adjudication": {
+    "label_wrong": 10,
+    "model_wrong": 5,
+    "ambiguous": 2,
+    "unreviewed": 0
+  },
+  "misspelling_family": {
+    "terms": [
+      "shlpplng",
+      "oniine",
+      "miiiion",
+      "prlces",
+      "successfull"
+    ],
+    "train_documents": 63,
+    "test_documents": 12,
+    "macro_f1_with": 0.9684305548141379,
+    "macro_f1_without": 0.9665359719263581,
+    "difference": -0.0018945828877797721
+  }
+}

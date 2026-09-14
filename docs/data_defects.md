@@ -578,3 +578,63 @@ times the compute, and gives up interpretability. Phase 9 reports both.
 
 Two new defects, D19 and D20, both ours and both fixed. 190 tests passing. Phase 9 may
 proceed to the holdout.
+
+## Phase 9: holdout evaluation
+
+Detail in `docs/phase9_findings.md`. Numbers in `docs/phase9_holdout.json`, every error in
+`docs/phase9_errors.json`, evaluation ledger in `docs/holdout_ledger.json`.
+
+### D9 closed, and it is larger than deduplication could reach.
+
+Phase 3 found five near duplicate clusters where the two source corpora disagreed about the
+same email, and dropped them. That handled the cases where the identical message appeared in
+both files.
+
+The holdout errors reveal the larger population. Ten of the seventeen misclassifications are
+the model correctly identifying an advance fee scam that lives in the Enron spam corpus and
+is therefore labelled SPAM. These are different messages of the same kind, filed under
+different labels by two different corpus builders, which no deduplication can catch.
+
+Measured consequence: 58.8 percent of the headline model's errors are the model being right.
+If those labels were corrected, errors would fall from 17 to 5 plus 2 arguable, putting the
+corpus ceiling near 0.99 rather than 1.00, and making the gap between the top phase 8 models
+smaller than the label noise they were ranked on.
+
+Recorded as an indication of the ceiling, not as a score. The headline macro F1 stays 0.9684
+as measured, and no model decision was taken from the adjudication.
+
+### D21. We compared a test score against the wrong uncertainty. Severity: medium, fixed.
+
+The first version of the holdout script compared the gap between the test score and the
+nested cross validation estimate against the cross validation standard deviation of 0.0027,
+and reported both configurations as "OUTSIDE one standard deviation". That reads as a
+discrepancy requiring explanation, and it was an artifact.
+
+A cross validation standard deviation measures how much the estimate moved between training
+folds. It is not a confidence interval on a score computed from 540 documents. Bootstrapping
+the test set over 5,000 resamples gives a 95 percent interval of 0.9526 to 0.9819 for the
+headline, roughly eleven times wider than the fold standard deviation, and both nested
+estimates sit comfortably inside their intervals.
+
+Fixed by reporting the bootstrap interval and testing coverage against it. Honest conclusion:
+the holdout agrees with cross validation within sampling error.
+
+### D11 and the misspelling question, both closed.
+
+The spam misspelling family, `shlpplng`, `oniine`, `miiiion`, `prlces`, `successfull`, appears
+in 63 training and 12 test documents. Removing it from both splits costs 0.0019 macro F1,
+inside the bootstrap interval. It is strong individually and redundant collectively, the same
+pattern phase 4 found for provenance markers.
+
+### Phase 9 verdict
+
+Headline: soft voting ensemble on tfidf, macro F1 0.9684 on 540 held out documents, 95 percent
+interval 0.9526 to 0.9819, clearing the formatting only bar by 0.2671. Secondary multinomial
+naive Bayes at 0.9628.
+
+Zero fraud emails classified as legitimate mail and zero legitimate emails classified as
+fraud, in 360 opportunities. The FRAUD against NORMAL boundary is error free; all seventeen
+errors sit on the boundaries involving spam.
+
+D9 closed, D11 closed, one new defect D21 fixed. 214 tests passing. Phase 10 may proceed to
+the fraud class threshold analysis.
