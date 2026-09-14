@@ -638,3 +638,70 @@ errors sit on the boundaries involving spam.
 
 D9 closed, D11 closed, one new defect D21 fixed. 214 tests passing. Phase 10 may proceed to
 the fraud class threshold analysis.
+
+## Phase 10: fraud class deep dive
+
+Detail in `docs/phase10_findings.md`. Numbers in `docs/phase10_fraud.json`.
+
+The threshold was selected on cross validated training predictions. The holdout was read only
+to report what that threshold does, no new configuration was scored, and the holdout ledger
+still records two distinct configurations.
+
+### 8.6 closed. Precision on a balanced corpus does not transfer, and the collapse is cheap.
+
+Recall and the per class false alarm rates are properties of the classifier and carry over.
+The class proportions do not, and precision depends on them.
+
+<table>
+<tr><th>Mailbox</th><th>Precision</th><th>False alarms from spam</th><th>False alarms from legitimate mail</th></tr>
+<tr><td>Corpus as built, 1 in 3 fraud</td><td>0.9570</td><td>1,481</td><td>0</td></tr>
+<tr><td>Filtered inbox, 0.5 percent fraud</td><td>0.2705</td><td>1,333</td><td>0</td></tr>
+<tr><td>Well filtered inbox, 0.1 percent fraud</td><td>0.1820</td><td>444</td><td>0</td></tr>
+</table>
+
+Per 100,000 messages, at identical recall of 0.9889 and identical false alarm rates. Precision
+falls by a factor of five with nothing about the model changed.
+
+The second half of the finding matters as much as the first. Every false alarm comes from
+spam and none from legitimate mail, because the measured false alarm rate on legitimate mail
+is zero: not one of the 180 legitimate holdout emails was flagged as fraud at either
+threshold. So the collapse describes a detector that files junk as the wrong kind of junk.
+
+Decision: the README quotes both figures with the prevalence assumption stated, and leads on
+the deployment claim rather than on precision. Quoting 0.957 without the correction is
+misleading; quoting 0.182 without saying where the false alarms land is misleading the other
+way.
+
+### 8.8 closed. Calibration is adequate and its error has a known cause.
+
+Brier 0.0188 and expected calibration error 0.0299 on the holdout, against 0.25 for a coin
+flip. The bin gaps are not random: the model is over confident below 0.3 and under confident
+above 0.9, so its probabilities are pulled toward the middle. That is the signature of a soft
+voting ensemble, which averages three members and cannot output a probability more extreme
+than its most extreme member.
+
+Decision: no calibration applied. The distortion is small and the threshold is insensitive to
+it. Recorded that multinomial naive Bayes would be preferable if calibrated probabilities were
+needed downstream.
+
+### D22. Threshold tuning turned out not to matter, and that is the finding. Severity: informational.
+
+The cheapest threshold on the training folds is 0.40 rather than the default 0.50, and it
+changes cost by 3.5 out of roughly 150. On the holdout both give zero fraud reaching the inbox
+and zero legitimate mail destroyed, with cost 8.0 against 10.0.
+
+The same threshold is selected across a fifty fold range of cost ratios, moving only at 500
+to 1. So the operating point does not depend on cost numbers that had to be invented, which
+is the useful thing to know about an invented assumption.
+
+Recorded so the README does not present a tuned threshold as an achievement. Average precision
+is 0.9905 and the precision recall curve sits against the corner, which is why there is so
+little for a threshold to do.
+
+### Phase 10 verdict
+
+8.6 and 8.8 both closed, one informational entry. 235 tests passing.
+
+The deployment relevant claim is not a precision figure. It is that zero fraud emails reached
+the inbox, zero legitimate emails were destroyed, and every false alarm landed on spam. Phase
+11 may proceed to the write up.

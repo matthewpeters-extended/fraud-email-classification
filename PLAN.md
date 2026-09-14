@@ -4,7 +4,7 @@ Multi class text classification that sorts raw email bodies into Normal, Spam an
 the Fraud class is advance fee and wire transfer solicitation. Built as a resume portfolio piece
 with an honest evaluation protocol rather than a headline accuracy number.
 
-Status: phases 1 to 9 complete and verified. Phases 10 and 11 outstanding.
+Status: phases 1 to 10 complete and verified. Phase 11, the write up, outstanding.
 Created 2026 09 14.
 Scope locked with Matthew: three classes, scripts as the primary artefact.
 
@@ -163,13 +163,16 @@ configurations scored once on the 540 document test split. Headline macro F1 0.9
 fraud emails reaching the inbox, and 10 of 17 errors adjudicated as the model being right and
 the corpus label being wrong. Detail in `docs/phase9_findings.md`.
 
-**Phase 10. Fraud class deep dive.** Treat Fraud as the positive class. Precision and recall
-tradeoff, threshold selection under an asymmetric cost assumption, and a stated view on where
-the operating point should sit. Note going in that phase 9 already recorded zero fraud emails
-reaching the inbox at the default threshold, so the interesting question is how much precision
-headroom exists rather than whether recall can be improved.
+**Phase 10. Fraud class deep dive.** Complete. Threshold selected on training folds under
+stated costs, calibration checked, and precision reprojected onto realistic mailbox
+prevalence. The threshold barely matters; the prevalence correction matters enormously.
+Detail in `docs/phase10_findings.md`.
 
-**Phase 11. Write up.** WALKTHROUGH.md, then README.md last with real numbers.
+**Phase 11. Write up.** WALKTHROUGH.md, then README.md last with real numbers. The README
+leads on the deployment claim, zero fraud reaching the inbox and zero legitimate mail
+destroyed, not on a precision figure, and states the prevalence assumption behind every
+precision number it quotes. Section 10 of this plan carries the resume framing; the numbers
+to use are in `docs/phase9_holdout.json` and `docs/phase10_fraud.json`.
 
 ## 8. Defects we inherit and fix
 
@@ -219,7 +222,7 @@ On a balanced three class problem accuracy hides which class is failing, and the
 the only one anybody cares about. Fix: macro F1 as the headline, full per class breakdown, and a
 confusion matrix always shown.
 
-**8.6 Artificial class balance. Severity: medium.**
+**8.6 Artificial class balance. Severity: medium. Closed at phase 10.**
 A real inbox is not one third fraud. Sampling 1,000 per class inflates fraud precision relative
 to deployment. Fix: report a second evaluation at a realistic prevalence assumption and state the
 assumption explicitly.
@@ -229,7 +232,7 @@ The reference samples randomly with no seed and scores on one split, so its numb
 reproducible and carry no error bar. Fix: fixed seeds throughout, cross validation for model
 selection, and a reported spread rather than a point estimate.
 
-**8.8 No calibration. Severity: low.**
+**8.8 No calibration. Severity: low. Closed at phase 10.**
 Threshold selection for the fraud class needs probabilities that mean something. Fix: reliability
 check on the chosen model, and calibration applied if it is badly off.
 

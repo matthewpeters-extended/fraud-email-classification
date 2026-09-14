@@ -1,0 +1,842 @@
+{
+  "phase": 10,
+  "recorded_utc": "2026-09-14T15:47:33+00:00",
+  "model": "voting_ensemble",
+  "vectoriser": "tfidf",
+  "costs": {
+    "missed_fraud_to_inbox": 100.0,
+    "missed_fraud_to_spam": 2.0,
+    "false_alarm_on_legitimate": 20.0,
+    "false_alarm_on_spam": 0.5
+  },
+  "chosen_threshold": 0.4,
+  "chosen_on": "cross validated training predictions",
+  "train_at_chosen": {
+    "threshold": 0.4,
+    "true_positives": 712,
+    "false_positives": 29,
+    "false_negatives": 8,
+    "precision": 0.9608636977058029,
+    "recall": 0.9888888888888889,
+    "f1": 0.974674880219028,
+    "cost": 148.0,
+    "missed_to_inbox": 1,
+    "false_alarms_on_legitimate": 1
+  },
+  "train_at_default": {
+    "threshold": 0.5,
+    "true_positives": 710,
+    "false_positives": 28,
+    "false_negatives": 10,
+    "precision": 0.962059620596206,
+    "recall": 0.9861111111111112,
+    "f1": 0.9739368998628258,
+    "cost": 151.5,
+    "missed_to_inbox": 1,
+    "false_alarms_on_legitimate": 1
+  },
+  "test_at_chosen": {
+    "threshold": 0.4,
+    "true_positives": 178,
+    "false_positives": 8,
+    "false_negatives": 2,
+    "precision": 0.956989247311828,
+    "recall": 0.9888888888888889,
+    "f1": 0.9726775956284154,
+    "cost": 8.0,
+    "missed_to_inbox": 0,
+    "false_alarms_on_legitimate": 0
+  },
+  "test_at_default": {
+    "threshold": 0.5,
+    "true_positives": 177,
+    "false_positives": 8,
+    "false_negatives": 3,
+    "precision": 0.9567567567567568,
+    "recall": 0.9833333333333333,
+    "f1": 0.96986301369863,
+    "cost": 10.0,
+    "missed_to_inbox": 0,
+    "false_alarms_on_legitimate": 0
+  },
+  "average_precision_holdout": 0.9905491475839683,
+  "calibration": {
+    "train_brier": 0.019701151351760277,
+    "train_ece": 0.0331058279766835,
+    "test_brier": 0.018773421542563035,
+    "test_ece": 0.029915305546530428,
+    "test_bins": [
+      {
+        "low": 0.0,
+        "high": 0.1,
+        "count": 337,
+        "mean_predicted": 0.02469558079219238,
+        "observed_rate": 0.005934718100890208
+      },
+      {
+        "low": 0.1,
+        "high": 0.2,
+        "count": 15,
+        "mean_predicted": 0.14532589032777876,
+        "observed_rate": 0.0
+      },
+      {
+        "low": 0.2,
+        "high": 0.30000000000000004,
+        "count": 2,
+        "mean_predicted": 0.25477296402048033,
+        "observed_rate": 0.0
+      },
+      {
+        "low": 0.30000000000000004,
+        "high": 0.4,
+        "count": 0,
+        "mean_predicted": null,
+        "observed_rate": null
+      },
+      {
+        "low": 0.4,
+        "high": 0.5,
+        "count": 1,
+        "mean_predicted": 0.4300951740282086,
+        "observed_rate": 1.0
+      },
+      {
+        "low": 0.5,
+        "high": 0.6000000000000001,
+        "count": 0,
+        "mean_predicted": null,
+        "observed_rate": null
+      },
+      {
+        "low": 0.6000000000000001,
+        "high": 0.7000000000000001,
+        "count": 5,
+        "mean_predicted": 0.6629332758821997,
+        "observed_rate": 0.8
+      },
+      {
+        "low": 0.7000000000000001,
+        "high": 0.8,
+        "count": 5,
+        "mean_predicted": 0.7819205098953005,
+        "observed_rate": 0.8
+      },
+      {
+        "low": 0.8,
+        "high": 0.9,
+        "count": 34,
+        "mean_predicted": 0.857899844963376,
+        "observed_rate": 0.8529411764705882
+      },
+      {
+        "low": 0.9,
+        "high": 1.0,
+        "count": 141,
+        "mean_predicted": 0.9529915648272278,
+        "observed_rate": 0.9929078014184397
+      }
+    ]
+  },
+  "measured_rates": {
+    "recall": 0.9888888888888889,
+    "false_alarm_rate_on_spam": 0.044444444444444446,
+    "false_alarm_rate_on_legitimate": 0.0
+  },
+  "prevalence_projections": {
+    "corpus as built, one third fraud": {
+      "prevalence": {
+        "FRAUD": 0.3333333333333333,
+        "SPAM": 0.3333333333333333,
+        "NORMAL": 0.3333333333333333
+      },
+      "mailbox_size": 100000,
+      "true_positives": 32962.962962962956,
+      "false_negatives": 370.37037037037226,
+      "false_positives_from_spam": 1481.4814814814813,
+      "false_positives_from_legitimate": 0.0,
+      "precision": 0.956989247311828,
+      "recall": 0.9888888888888889,
+      "false_alarms_per_true_fraud": 0.04494382022471911
+    },
+    "spam heavy inbox, 5 percent fraud": {
+      "prevalence": {
+        "FRAUD": 0.05,
+        "SPAM": 0.45,
+        "NORMAL": 0.5
+      },
+      "mailbox_size": 100000,
+      "true_positives": 4944.444444444444,
+      "false_negatives": 55.55555555555566,
+      "false_positives_from_spam": 2000.0,
+      "false_positives_from_legitimate": 0.0,
+      "precision": 0.712,
+      "recall": 0.9888888888888889,
+      "false_alarms_per_true_fraud": 0.4044943820224719
+    },
+    "filtered inbox, 0.5 percent fraud": {
+      "prevalence": {
+        "FRAUD": 0.005,
+        "SPAM": 0.3,
+        "NORMAL": 0.695
+      },
+      "mailbox_size": 100000,
+      "true_positives": 494.44444444444446,
+      "false_negatives": 5.555555555555543,
+      "false_positives_from_spam": 1333.3333333333335,
+      "false_positives_from_legitimate": 0.0,
+      "precision": 0.270516717325228,
+      "recall": 0.9888888888888889,
+      "false_alarms_per_true_fraud": 2.6966292134831464
+    },
+    "well filtered inbox, 0.1 percent fraud": {
+      "prevalence": {
+        "FRAUD": 0.001,
+        "SPAM": 0.1,
+        "NORMAL": 0.899
+      },
+      "mailbox_size": 100000,
+      "true_positives": 98.88888888888889,
+      "false_negatives": 1.1111111111111143,
+      "false_positives_from_spam": 444.44444444444446,
+      "false_positives_from_legitimate": 0.0,
+      "precision": 0.1820040899795501,
+      "recall": 0.9888888888888889,
+      "false_alarms_per_true_fraud": 4.49438202247191
+    }
+  },
+  "cost_sensitivity": [
+    {
+      "missed_fraud_to_inbox": 5,
+      "threshold": 0.4,
+      "precision": 0.9608636977058029,
+      "recall": 0.9888888888888889
+    },
+    {
+      "missed_fraud_to_inbox": 10,
+      "threshold": 0.4,
+      "precision": 0.9608636977058029,
+      "recall": 0.9888888888888889
+    },
+    {
+      "missed_fraud_to_inbox": 25,
+      "threshold": 0.4,
+      "precision": 0.9608636977058029,
+      "recall": 0.9888888888888889
+    },
+    {
+      "missed_fraud_to_inbox": 50,
+      "threshold": 0.4,
+      "precision": 0.9608636977058029,
+      "recall": 0.9888888888888889
+    },
+    {
+      "missed_fraud_to_inbox": 100,
+      "threshold": 0.4,
+      "precision": 0.9608636977058029,
+      "recall": 0.9888888888888889
+    },
+    {
+      "missed_fraud_to_inbox": 250,
+      "threshold": 0.4,
+      "precision": 0.9608636977058029,
+      "recall": 0.9888888888888889
+    },
+    {
+      "missed_fraud_to_inbox": 500,
+      "threshold": 0.12,
+      "precision": 0.89375,
+      "recall": 0.9930555555555556
+    }
+  ],
+  "threshold_sweep_test": [
+    {
+      "threshold": 0.02,
+      "true_positives": 180,
+      "false_positives": 172,
+      "false_negatives": 0,
+      "precision": 0.5113636363636364,
+      "recall": 1.0,
+      "f1": 0.6766917293233083,
+      "cost": 1587.5,
+      "missed_to_inbox": 0,
+      "false_alarms_on_legitimate": 77
+    },
+    {
+      "threshold": 0.04,
+      "true_positives": 180,
+      "false_positives": 86,
+      "false_negatives": 0,
+      "precision": 0.6766917293233082,
+      "recall": 1.0,
+      "f1": 0.8071748878923766,
+      "cost": 745.0,
+      "missed_to_inbox": 0,
+      "false_alarms_on_legitimate": 36
+    },
+    {
+      "threshold": 0.06,
+      "true_positives": 179,
+      "false_positives": 52,
+      "false_negatives": 1,
+      "precision": 0.7748917748917749,
+      "recall": 0.9944444444444445,
+      "f1": 0.8710462287104622,
+      "cost": 457.0,
+      "missed_to_inbox": 0,
+      "false_alarms_on_legitimate": 22
+    },
+    {
+      "threshold": 0.08,
+      "true_positives": 179,
+      "false_positives": 34,
+      "false_negatives": 1,
+      "precision": 0.8403755868544601,
+      "recall": 0.9944444444444445,
+      "f1": 0.910941475826972,
+      "cost": 175.0,
+      "missed_to_inbox": 0,
+      "false_alarms_on_legitimate": 8
+    },
+    {
+      "threshold": 0.1,
+      "true_positives": 178,
+      "false_positives": 25,
+      "false_negatives": 2,
+      "precision": 0.8768472906403941,
+      "recall": 0.9888888888888889,
+      "f1": 0.9295039164490861,
+      "cost": 94.5,
+      "missed_to_inbox": 0,
+      "false_alarms_on_legitimate": 4
+    },
+    {
+      "threshold": 0.12,
+      "true_positives": 178,
+      "false_positives": 22,
+      "false_negatives": 2,
+      "precision": 0.89,
+      "recall": 0.9888888888888889,
+      "f1": 0.9368421052631579,
+      "cost": 93.0,
+      "missed_to_inbox": 0,
+      "false_alarms_on_legitimate": 4
+    },
+    {
+      "threshold": 0.14,
+      "true_positives": 178,
+      "false_positives": 18,
+      "false_negatives": 2,
+      "precision": 0.9081632653061225,
+      "recall": 0.9888888888888889,
+      "f1": 0.946808510638298,
+      "cost": 91.0,
+      "missed_to_inbox": 0,
+      "false_alarms_on_legitimate": 4
+    },
+    {
+      "threshold": 0.16,
+      "true_positives": 178,
+      "false_positives": 13,
+      "false_negatives": 2,
+      "precision": 0.9319371727748691,
+      "recall": 0.9888888888888889,
+      "f1": 0.9595687331536388,
+      "cost": 49.5,
+      "missed_to_inbox": 0,
+      "false_alarms_on_legitimate": 2
+    },
+    {
+      "threshold": 0.18,
+      "true_positives": 178,
+      "false_positives": 13,
+      "false_negatives": 2,
+      "precision": 0.9319371727748691,
+      "recall": 0.9888888888888889,
+      "f1": 0.9595687331536388,
+      "cost": 49.5,
+      "missed_to_inbox": 0,
+      "false_alarms_on_legitimate": 2
+    },
+    {
+      "threshold": 0.2,
+      "true_positives": 178,
+      "false_positives": 10,
+      "false_negatives": 2,
+      "precision": 0.9468085106382979,
+      "recall": 0.9888888888888889,
+      "f1": 0.9673913043478262,
+      "cost": 28.5,
+      "missed_to_inbox": 0,
+      "false_alarms_on_legitimate": 1
+    },
+    {
+      "threshold": 0.22,
+      "true_positives": 178,
+      "false_positives": 10,
+      "false_negatives": 2,
+      "precision": 0.9468085106382979,
+      "recall": 0.9888888888888889,
+      "f1": 0.9673913043478262,
+      "cost": 28.5,
+      "missed_to_inbox": 0,
+      "false_alarms_on_legitimate": 1
+    },
+    {
+      "threshold": 0.24,
+      "true_positives": 178,
+      "false_positives": 10,
+      "false_negatives": 2,
+      "precision": 0.9468085106382979,
+      "recall": 0.9888888888888889,
+      "f1": 0.9673913043478262,
+      "cost": 28.5,
+      "missed_to_inbox": 0,
+      "false_alarms_on_legitimate": 1
+    },
+    {
+      "threshold": 0.26,
+      "true_positives": 178,
+      "false_positives": 9,
+      "false_negatives": 2,
+      "precision": 0.9518716577540107,
+      "recall": 0.9888888888888889,
+      "f1": 0.9700272479564033,
+      "cost": 28.0,
+      "missed_to_inbox": 0,
+      "false_alarms_on_legitimate": 1
+    },
+    {
+      "threshold": 0.28,
+      "true_positives": 178,
+      "false_positives": 8,
+      "false_negatives": 2,
+      "precision": 0.956989247311828,
+      "recall": 0.9888888888888889,
+      "f1": 0.9726775956284154,
+      "cost": 8.0,
+      "missed_to_inbox": 0,
+      "false_alarms_on_legitimate": 0
+    },
+    {
+      "threshold": 0.3,
+      "true_positives": 178,
+      "false_positives": 8,
+      "false_negatives": 2,
+      "precision": 0.956989247311828,
+      "recall": 0.9888888888888889,
+      "f1": 0.9726775956284154,
+      "cost": 8.0,
+      "missed_to_inbox": 0,
+      "false_alarms_on_legitimate": 0
+    },
+    {
+      "threshold": 0.32,
+      "true_positives": 178,
+      "false_positives": 8,
+      "false_negatives": 2,
+      "precision": 0.956989247311828,
+      "recall": 0.9888888888888889,
+      "f1": 0.9726775956284154,
+      "cost": 8.0,
+      "missed_to_inbox": 0,
+      "false_alarms_on_legitimate": 0
+    },
+    {
+      "threshold": 0.34,
+      "true_positives": 178,
+      "false_positives": 8,
+      "false_negatives": 2,
+      "precision": 0.956989247311828,
+      "recall": 0.9888888888888889,
+      "f1": 0.9726775956284154,
+      "cost": 8.0,
+      "missed_to_inbox": 0,
+      "false_alarms_on_legitimate": 0
+    },
+    {
+      "threshold": 0.36,
+      "true_positives": 178,
+      "false_positives": 8,
+      "false_negatives": 2,
+      "precision": 0.956989247311828,
+      "recall": 0.9888888888888889,
+      "f1": 0.9726775956284154,
+      "cost": 8.0,
+      "missed_to_inbox": 0,
+      "false_alarms_on_legitimate": 0
+    },
+    {
+      "threshold": 0.38,
+      "true_positives": 178,
+      "false_positives": 8,
+      "false_negatives": 2,
+      "precision": 0.956989247311828,
+      "recall": 0.9888888888888889,
+      "f1": 0.9726775956284154,
+      "cost": 8.0,
+      "missed_to_inbox": 0,
+      "false_alarms_on_legitimate": 0
+    },
+    {
+      "threshold": 0.4,
+      "true_positives": 178,
+      "false_positives": 8,
+      "false_negatives": 2,
+      "precision": 0.956989247311828,
+      "recall": 0.9888888888888889,
+      "f1": 0.9726775956284154,
+      "cost": 8.0,
+      "missed_to_inbox": 0,
+      "false_alarms_on_legitimate": 0
+    },
+    {
+      "threshold": 0.42,
+      "true_positives": 178,
+      "false_positives": 8,
+      "false_negatives": 2,
+      "precision": 0.956989247311828,
+      "recall": 0.9888888888888889,
+      "f1": 0.9726775956284154,
+      "cost": 8.0,
+      "missed_to_inbox": 0,
+      "false_alarms_on_legitimate": 0
+    },
+    {
+      "threshold": 0.44,
+      "true_positives": 177,
+      "false_positives": 8,
+      "false_negatives": 3,
+      "precision": 0.9567567567567568,
+      "recall": 0.9833333333333333,
+      "f1": 0.96986301369863,
+      "cost": 10.0,
+      "missed_to_inbox": 0,
+      "false_alarms_on_legitimate": 0
+    },
+    {
+      "threshold": 0.46,
+      "true_positives": 177,
+      "false_positives": 8,
+      "false_negatives": 3,
+      "precision": 0.9567567567567568,
+      "recall": 0.9833333333333333,
+      "f1": 0.96986301369863,
+      "cost": 10.0,
+      "missed_to_inbox": 0,
+      "false_alarms_on_legitimate": 0
+    },
+    {
+      "threshold": 0.48,
+      "true_positives": 177,
+      "false_positives": 8,
+      "false_negatives": 3,
+      "precision": 0.9567567567567568,
+      "recall": 0.9833333333333333,
+      "f1": 0.96986301369863,
+      "cost": 10.0,
+      "missed_to_inbox": 0,
+      "false_alarms_on_legitimate": 0
+    },
+    {
+      "threshold": 0.5,
+      "true_positives": 177,
+      "false_positives": 8,
+      "false_negatives": 3,
+      "precision": 0.9567567567567568,
+      "recall": 0.9833333333333333,
+      "f1": 0.96986301369863,
+      "cost": 10.0,
+      "missed_to_inbox": 0,
+      "false_alarms_on_legitimate": 0
+    },
+    {
+      "threshold": 0.52,
+      "true_positives": 177,
+      "false_positives": 8,
+      "false_negatives": 3,
+      "precision": 0.9567567567567568,
+      "recall": 0.9833333333333333,
+      "f1": 0.96986301369863,
+      "cost": 10.0,
+      "missed_to_inbox": 0,
+      "false_alarms_on_legitimate": 0
+    },
+    {
+      "threshold": 0.54,
+      "true_positives": 177,
+      "false_positives": 8,
+      "false_negatives": 3,
+      "precision": 0.9567567567567568,
+      "recall": 0.9833333333333333,
+      "f1": 0.96986301369863,
+      "cost": 10.0,
+      "missed_to_inbox": 0,
+      "false_alarms_on_legitimate": 0
+    },
+    {
+      "threshold": 0.56,
+      "true_positives": 177,
+      "false_positives": 8,
+      "false_negatives": 3,
+      "precision": 0.9567567567567568,
+      "recall": 0.9833333333333333,
+      "f1": 0.96986301369863,
+      "cost": 10.0,
+      "missed_to_inbox": 0,
+      "false_alarms_on_legitimate": 0
+    },
+    {
+      "threshold": 0.58,
+      "true_positives": 177,
+      "false_positives": 8,
+      "false_negatives": 3,
+      "precision": 0.9567567567567568,
+      "recall": 0.9833333333333333,
+      "f1": 0.96986301369863,
+      "cost": 10.0,
+      "missed_to_inbox": 0,
+      "false_alarms_on_legitimate": 0
+    },
+    {
+      "threshold": 0.6,
+      "true_positives": 177,
+      "false_positives": 8,
+      "false_negatives": 3,
+      "precision": 0.9567567567567568,
+      "recall": 0.9833333333333333,
+      "f1": 0.96986301369863,
+      "cost": 10.0,
+      "missed_to_inbox": 0,
+      "false_alarms_on_legitimate": 0
+    },
+    {
+      "threshold": 0.62,
+      "true_positives": 177,
+      "false_positives": 8,
+      "false_negatives": 3,
+      "precision": 0.9567567567567568,
+      "recall": 0.9833333333333333,
+      "f1": 0.96986301369863,
+      "cost": 10.0,
+      "missed_to_inbox": 0,
+      "false_alarms_on_legitimate": 0
+    },
+    {
+      "threshold": 0.64,
+      "true_positives": 176,
+      "false_positives": 8,
+      "false_negatives": 4,
+      "precision": 0.9565217391304348,
+      "recall": 0.9777777777777777,
+      "f1": 0.967032967032967,
+      "cost": 110.0,
+      "missed_to_inbox": 1,
+      "false_alarms_on_legitimate": 0
+    },
+    {
+      "threshold": 0.66,
+      "true_positives": 176,
+      "false_positives": 7,
+      "false_negatives": 4,
+      "precision": 0.9617486338797814,
+      "recall": 0.9777777777777777,
+      "f1": 0.9696969696969697,
+      "cost": 109.5,
+      "missed_to_inbox": 1,
+      "false_alarms_on_legitimate": 0
+    },
+    {
+      "threshold": 0.68,
+      "true_positives": 175,
+      "false_positives": 7,
+      "false_negatives": 5,
+      "precision": 0.9615384615384616,
+      "recall": 0.9722222222222222,
+      "f1": 0.9668508287292817,
+      "cost": 111.5,
+      "missed_to_inbox": 1,
+      "false_alarms_on_legitimate": 0
+    },
+    {
+      "threshold": 0.7,
+      "true_positives": 173,
+      "false_positives": 7,
+      "false_negatives": 7,
+      "precision": 0.9611111111111111,
+      "recall": 0.9611111111111111,
+      "f1": 0.9611111111111111,
+      "cost": 213.5,
+      "missed_to_inbox": 2,
+      "false_alarms_on_legitimate": 0
+    },
+    {
+      "threshold": 0.72,
+      "true_positives": 173,
+      "false_positives": 7,
+      "false_negatives": 7,
+      "precision": 0.9611111111111111,
+      "recall": 0.9611111111111111,
+      "f1": 0.9611111111111111,
+      "cost": 213.5,
+      "missed_to_inbox": 2,
+      "false_alarms_on_legitimate": 0
+    },
+    {
+      "threshold": 0.74,
+      "true_positives": 173,
+      "false_positives": 7,
+      "false_negatives": 7,
+      "precision": 0.9611111111111111,
+      "recall": 0.9611111111111111,
+      "f1": 0.9611111111111111,
+      "cost": 213.5,
+      "missed_to_inbox": 2,
+      "false_alarms_on_legitimate": 0
+    },
+    {
+      "threshold": 0.76,
+      "true_positives": 173,
+      "false_positives": 7,
+      "false_negatives": 7,
+      "precision": 0.9611111111111111,
+      "recall": 0.9611111111111111,
+      "f1": 0.9611111111111111,
+      "cost": 213.5,
+      "missed_to_inbox": 2,
+      "false_alarms_on_legitimate": 0
+    },
+    {
+      "threshold": 0.78,
+      "true_positives": 171,
+      "false_positives": 7,
+      "false_negatives": 9,
+      "precision": 0.9606741573033708,
+      "recall": 0.95,
+      "f1": 0.9553072625698323,
+      "cost": 217.5,
+      "missed_to_inbox": 2,
+      "false_alarms_on_legitimate": 0
+    },
+    {
+      "threshold": 0.8,
+      "true_positives": 169,
+      "false_positives": 6,
+      "false_negatives": 11,
+      "precision": 0.9657142857142857,
+      "recall": 0.9388888888888889,
+      "f1": 0.952112676056338,
+      "cost": 319.0,
+      "missed_to_inbox": 3,
+      "false_alarms_on_legitimate": 0
+    },
+    {
+      "threshold": 0.82,
+      "true_positives": 165,
+      "false_positives": 6,
+      "false_negatives": 15,
+      "precision": 0.9649122807017544,
+      "recall": 0.9166666666666666,
+      "f1": 0.9401709401709402,
+      "cost": 327.0,
+      "missed_to_inbox": 3,
+      "false_alarms_on_legitimate": 0
+    },
+    {
+      "threshold": 0.84,
+      "true_positives": 160,
+      "false_positives": 5,
+      "false_negatives": 20,
+      "precision": 0.9696969696969697,
+      "recall": 0.8888888888888888,
+      "f1": 0.927536231884058,
+      "cost": 532.5,
+      "missed_to_inbox": 5,
+      "false_alarms_on_legitimate": 0
+    },
+    {
+      "threshold": 0.86,
+      "true_positives": 156,
+      "false_positives": 4,
+      "false_negatives": 24,
+      "precision": 0.975,
+      "recall": 0.8666666666666667,
+      "f1": 0.9176470588235294,
+      "cost": 540.0,
+      "missed_to_inbox": 5,
+      "false_alarms_on_legitimate": 0
+    },
+    {
+      "threshold": 0.88,
+      "true_positives": 145,
+      "false_positives": 3,
+      "false_negatives": 35,
+      "precision": 0.9797297297297297,
+      "recall": 0.8055555555555556,
+      "f1": 0.8841463414634148,
+      "cost": 855.5,
+      "missed_to_inbox": 8,
+      "false_alarms_on_legitimate": 0
+    },
+    {
+      "threshold": 0.9,
+      "true_positives": 140,
+      "false_positives": 1,
+      "false_negatives": 40,
+      "precision": 0.9929078014184397,
+      "recall": 0.7777777777777778,
+      "f1": 0.8722741433021807,
+      "cost": 864.5,
+      "missed_to_inbox": 8,
+      "false_alarms_on_legitimate": 0
+    },
+    {
+      "threshold": 0.92,
+      "true_positives": 122,
+      "false_positives": 1,
+      "false_negatives": 58,
+      "precision": 0.991869918699187,
+      "recall": 0.6777777777777778,
+      "f1": 0.8052805280528053,
+      "cost": 900.5,
+      "missed_to_inbox": 8,
+      "false_alarms_on_legitimate": 0
+    },
+    {
+      "threshold": 0.94,
+      "true_positives": 99,
+      "false_positives": 0,
+      "false_negatives": 81,
+      "precision": 1.0,
+      "recall": 0.55,
+      "f1": 0.7096774193548387,
+      "cost": 1044.0,
+      "missed_to_inbox": 9,
+      "false_alarms_on_legitimate": 0
+    },
+    {
+      "threshold": 0.96,
+      "true_positives": 63,
+      "false_positives": 0,
+      "false_negatives": 117,
+      "precision": 1.0,
+      "recall": 0.35,
+      "f1": 0.5185185185185185,
+      "cost": 1312.0,
+      "missed_to_inbox": 11,
+      "false_alarms_on_legitimate": 0
+    },
+    {
+      "threshold": 0.98,
+      "true_positives": 21,
+      "false_positives": 0,
+      "false_negatives": 159,
+      "precision": 1.0,
+      "recall": 0.11666666666666667,
+      "f1": 0.208955223880597,
+      "cost": 1690.0,
+      "missed_to_inbox": 14,
+      "false_alarms_on_legitimate": 0
+    }
+  ]
+}
