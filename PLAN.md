@@ -4,7 +4,7 @@ Multi class text classification that sorts raw email bodies into Normal, Spam an
 the Fraud class is advance fee and wire transfer solicitation. Built as a resume portfolio piece
 with an honest evaluation protocol rather than a headline accuracy number.
 
-Status: phases 1 to 7 complete and verified. Phases 8 to 11 outstanding.
+Status: phases 1 to 8 complete and verified. Phases 9 to 11 outstanding.
 Created 2026 09 14.
 Scope locked with Matthew: three classes, scripts as the primary artefact.
 
@@ -153,9 +153,10 @@ keyword rule to the three content free shortcuts, plus the phase 6 pipeline for 
 The trivial floor is random at 0.3355, not majority at 0.1667. The bar to clear is
 formatting only at 0.7013. Detail in `docs/phase7_findings.md`.
 
-**Phase 8. Model sweep.** Naive Bayes, Logistic Regression, Linear SVM, Random Forest, KNN and a
-voting ensemble, crossed with CountVectorizer and TF IDF. Stratified five fold cross validation
-on the training split only. Hyperparameters tuned inside the folds.
+**Phase 8. Model sweep.** Complete. Seven estimators crossed with two vectorisers, scored by
+nested cross validation so no reported number was tuned on the data it reports. Winner is a
+soft voting ensemble on tfidf at 0.9740, though multinomial naive Bayes at 0.9721 is inside
+the noise for a sixth of the compute. Detail in `docs/phase8_findings.md`.
 
 **Phase 9. Holdout evaluation and error analysis.** Single final scoring on the untouched test
 split. Confusion matrix, per class precision, recall and F1, macro F1. Then read the actual
@@ -408,3 +409,34 @@ A correction we owed: phases 4 to 6 quoted 0.1667 as the floor, but random guess
 0.3355, more than double. Macro F1 punishes a single class predictor harder than it punishes
 chance. Phase 4's claim that formatting alone is "4.21 times the majority baseline" is 2.09
 times against the correct floor. Logged as D18. Detail in `docs/phase7_findings.md`.
+
+### Phase 8
+
+Complete and verified. 190 tests passing. Fourteen configurations scored by nested cross
+validation, outer five folds for scoring and inner three for the hyperparameter search.
+
+<table>
+<tr><th>Rank</th><th>Configuration</th><th>Nested macro F1</th></tr>
+<tr><td>1</td><td>voting ensemble, tfidf</td><td>0.9740 +/- 0.0027</td></tr>
+<tr><td>2</td><td>multinomial naive Bayes, tfidf</td><td>0.9721 +/- 0.0049</td></tr>
+<tr><td>3</td><td>linear SVM, tfidf</td><td>0.9703 +/- 0.0050</td></tr>
+<tr><td>13</td><td>random forest, tfidf</td><td>0.9507 +/- 0.0157</td></tr>
+<tr><td>14</td><td>k nearest neighbours, count</td><td>0.8943 +/- 0.0154</td></tr>
+</table>
+
+Only two of fourteen configurations sit within one standard deviation of the winner, and the
+ensemble beats naive Bayes by 0.0019 against a standard deviation of 0.0027 while costing six
+times the compute and giving up interpretability. Naive Bayes is the honest recommendation.
+
+TF IDF beats raw counts everywhere except random forest, and the size of the gain tracks how
+much each model cares about feature magnitude: 0.0700 for k nearest neighbours, 0.0194 for
+linear SVM, almost nothing for the naive Bayes variants. KNN on raw counts is the worst
+configuration in the sweep, because cosine distance between unnormalised count vectors is
+dominated by document length, which is D11's shortcut arriving by another route.
+
+Two defects, both ours. D19: linear SVM never converged on count features at the default
+iteration cap, so a quarter of the sweep reported noise, and the only evidence was hundreds
+of identical warnings scrolling past inside the search. D20: our first optimism measurement
+was confounded by unequal training set sizes and produced a negative mean, which is
+impossible for a bias that only inflates. Corrected, optimism is +0.0007 on average and
++0.0033 at worst. Detail in `docs/phase8_findings.md`.

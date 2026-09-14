@@ -1,0 +1,361 @@
+{
+  "phase": 8,
+  "recorded_utc": "2026-09-14T15:31:33+00:00",
+  "seed": 20260914,
+  "outer_folds": 5,
+  "inner_folds": 3,
+  "train_size": 2160,
+  "scoring": "f1_macro",
+  "bar_to_clear": 0.701319517656295,
+  "random_floor": 0.33549912511595775,
+  "results": {
+    "multinomial_nb__count": {
+      "model": "multinomial_nb",
+      "vectoriser": "count",
+      "nested_macro_f1_mean": 0.9661209553226389,
+      "nested_macro_f1_std": 0.0037646021749142967,
+      "nested_folds": [
+        0.972173155564159,
+        0.960578578757131,
+        0.9650944838391778,
+        0.9653006282784955,
+        0.9674579301742309
+      ],
+      "tuned_on_all_macro_f1": 0.9661281434281838,
+      "optimism_gap": 7.188105544897461e-06,
+      "best_params": {
+        "clf__alpha": "0.1",
+        "vect__ngram_range": "(1, 2)"
+      },
+      "grid_size": 8,
+      "seconds": 4.5
+    },
+    "complement_nb__count": {
+      "model": "complement_nb",
+      "vectoriser": "count",
+      "nested_macro_f1_mean": 0.9632306521116307,
+      "nested_macro_f1_std": 0.0034828539144047274,
+      "nested_folds": [
+        0.9651184255722248,
+        0.9580976061184359,
+        0.9602412561398844,
+        0.9652599897684041,
+        0.9674359829592042
+      ],
+      "tuned_on_all_macro_f1": 0.9646313639009836,
+      "optimism_gap": 0.0014007117893528598,
+      "best_params": {
+        "clf__alpha": "1.0",
+        "vect__ngram_range": "(1, 2)"
+      },
+      "grid_size": 6,
+      "seconds": 3.2
+    },
+    "logistic_regression__count": {
+      "model": "logistic_regression",
+      "vectoriser": "count",
+      "nested_macro_f1_mean": 0.9523164691029455,
+      "nested_macro_f1_std": 0.01096056733183308,
+      "nested_folds": [
+        0.9676309218677838,
+        0.9398051016379013,
+        0.944395744109855,
+        0.9466969517281582,
+        0.9630536261710292
+      ],
+      "tuned_on_all_macro_f1": 0.9504592414680513,
+      "optimism_gap": -0.0018572276348942651,
+      "best_params": {
+        "clf__C": "20.0",
+        "vect__ngram_range": "(1, 2)"
+      },
+      "grid_size": 8,
+      "seconds": 8.1
+    },
+    "linear_svm__count": {
+      "model": "linear_svm",
+      "vectoriser": "count",
+      "nested_macro_f1_mean": 0.9509325664822452,
+      "nested_macro_f1_std": 0.011008856962844154,
+      "nested_folds": [
+        0.9699386660593557,
+        0.9398804907272543,
+        0.9421296296296297,
+        0.9466272008753146,
+        0.956086845119672
+      ],
+      "tuned_on_all_macro_f1": 0.9518636160577352,
+      "optimism_gap": 0.0009310495754899506,
+      "best_params": {
+        "clf__C": "0.05",
+        "vect__ngram_range": "(1, 2)"
+      },
+      "grid_size": 8,
+      "seconds": 5.0
+    },
+    "random_forest__count": {
+      "model": "random_forest",
+      "vectoriser": "count",
+      "nested_macro_f1_mean": 0.9516974208857517,
+      "nested_macro_f1_std": 0.01823031851616587,
+      "nested_folds": [
+        0.9629294715501612,
+        0.9254468225086177,
+        0.9560084672166739,
+        0.9374226301722232,
+        0.9766797129810829
+      ],
+      "tuned_on_all_macro_f1": 0.9530630694671768,
+      "optimism_gap": 0.0013656485814250718,
+      "best_params": {
+        "clf__max_features": "sqrt",
+        "clf__min_samples_leaf": "1",
+        "vect__ngram_range": "(1, 2)"
+      },
+      "grid_size": 8,
+      "seconds": 25.6
+    },
+    "knn__count": {
+      "model": "knn",
+      "vectoriser": "count",
+      "nested_macro_f1_mean": 0.894271044303901,
+      "nested_macro_f1_std": 0.01540642379747952,
+      "nested_folds": [
+        0.8806907976719298,
+        0.8898675104120958,
+        0.8762379552670713,
+        0.9101375739587122,
+        0.9144213842096952
+      ],
+      "tuned_on_all_macro_f1": 0.8946172137230091,
+      "optimism_gap": 0.00034616941910803334,
+      "best_params": {
+        "clf__n_neighbors": "3",
+        "clf__weights": "uniform",
+        "vect__ngram_range": "(1, 2)"
+      },
+      "grid_size": 12,
+      "seconds": 5.3
+    },
+    "voting_ensemble__count": {
+      "model": "voting_ensemble",
+      "vectoriser": "count",
+      "nested_macro_f1_mean": 0.9684868810906657,
+      "nested_macro_f1_std": 0.006692379457713618,
+      "nested_folds": [
+        0.9722300924195598,
+        0.9558800985114594,
+        0.9676054539068236,
+        0.9745293599778098,
+        0.9721894006376766
+      ],
+      "tuned_on_all_macro_f1": 0.9689557584569227,
+      "optimism_gap": 0.0004688773662570034,
+      "best_params": {
+        "clf__lr__C": "5.0",
+        "clf__nb__alpha": "0.1",
+        "vect__ngram_range": "(1, 2)"
+      },
+      "grid_size": 8,
+      "seconds": 26.4
+    },
+    "multinomial_nb__tfidf": {
+      "model": "multinomial_nb",
+      "vectoriser": "tfidf",
+      "nested_macro_f1_mean": 0.9721029161528953,
+      "nested_macro_f1_std": 0.004917280874945874,
+      "nested_folds": [
+        0.9767686579245588,
+        0.9675004465536127,
+        0.9650136077044719,
+        0.9768418005500071,
+        0.9743900680318264
+      ],
+      "tuned_on_all_macro_f1": 0.9721029161528953,
+      "optimism_gap": 0.0,
+      "best_params": {
+        "clf__alpha": "0.1",
+        "vect__ngram_range": "(1, 2)"
+      },
+      "grid_size": 8,
+      "seconds": 4.2
+    },
+    "complement_nb__tfidf": {
+      "model": "complement_nb",
+      "vectoriser": "tfidf",
+      "nested_macro_f1_mean": 0.9702217398793286,
+      "nested_macro_f1_std": 0.00543752196504712,
+      "nested_folds": [
+        0.9767686579245588,
+        0.9651210370668819,
+        0.9626281641726037,
+        0.9722007722007722,
+        0.9743900680318264
+      ],
+      "tuned_on_all_macro_f1": 0.9711499455491754,
+      "optimism_gap": 0.0009282056698468599,
+      "best_params": {
+        "clf__alpha": "0.1",
+        "vect__ngram_range": "(1, 2)"
+      },
+      "grid_size": 6,
+      "seconds": 3.5
+    },
+    "logistic_regression__tfidf": {
+      "model": "logistic_regression",
+      "vectoriser": "tfidf",
+      "nested_macro_f1_mean": 0.9689569232297106,
+      "nested_macro_f1_std": 0.006669061789091711,
+      "nested_folds": [
+        0.9791584057503123,
+        0.9605804800451959,
+        0.9629105339359089,
+        0.9722247841199757,
+        0.9699104122971604
+      ],
+      "tuned_on_all_macro_f1": 0.9703536982676475,
+      "optimism_gap": 0.0013967750379368926,
+      "best_params": {
+        "clf__C": "20.0",
+        "vect__ngram_range": "(1, 2)"
+      },
+      "grid_size": 8,
+      "seconds": 6.8
+    },
+    "linear_svm__tfidf": {
+      "model": "linear_svm",
+      "vectoriser": "tfidf",
+      "nested_macro_f1_mean": 0.9703237884834472,
+      "nested_macro_f1_std": 0.0049636936825811955,
+      "nested_folds": [
+        0.9768109629701325,
+        0.9628538916126486,
+        0.9698193306006352,
+        0.9676070207985102,
+        0.9745277364353093
+      ],
+      "tuned_on_all_macro_f1": 0.9721813778712507,
+      "optimism_gap": 0.0018575893878034488,
+      "best_params": {
+        "clf__C": "1.0",
+        "vect__ngram_range": "(1, 2)"
+      },
+      "grid_size": 8,
+      "seconds": 4.2
+    },
+    "random_forest__tfidf": {
+      "model": "random_forest",
+      "vectoriser": "tfidf",
+      "nested_macro_f1_mean": 0.9507433477637275,
+      "nested_macro_f1_std": 0.015655620781713328,
+      "nested_folds": [
+        0.9605360075255063,
+        0.92310740065123,
+        0.951351819695443,
+        0.9489453610271669,
+        0.9697761499192908
+      ],
+      "tuned_on_all_macro_f1": 0.9540398007584928,
+      "optimism_gap": 0.003296452994765331,
+      "best_params": {
+        "clf__max_features": "sqrt",
+        "clf__min_samples_leaf": "1",
+        "vect__ngram_range": "(1, 1)"
+      },
+      "grid_size": 8,
+      "seconds": 27.8
+    },
+    "knn__tfidf": {
+      "model": "knn",
+      "vectoriser": "tfidf",
+      "nested_macro_f1_mean": 0.9642693559107052,
+      "nested_macro_f1_std": 0.007880425784338896,
+      "nested_folds": [
+        0.9768518518518517,
+        0.9558332104648227,
+        0.9582039949745841,
+        0.9606251726752415,
+        0.9698325495870259
+      ],
+      "tuned_on_all_macro_f1": 0.9628619183127917,
+      "optimism_gap": -0.0014074375979135079,
+      "best_params": {
+        "clf__n_neighbors": "7",
+        "clf__weights": "uniform",
+        "vect__ngram_range": "(1, 2)"
+      },
+      "grid_size": 12,
+      "seconds": 5.5
+    },
+    "voting_ensemble__tfidf": {
+      "model": "voting_ensemble",
+      "vectoriser": "tfidf",
+      "nested_macro_f1_mean": 0.9740084165827743,
+      "nested_macro_f1_std": 0.002714372466758518,
+      "nested_folds": [
+        0.9767526669188845,
+        0.9697923668824012,
+        0.9721922645504258,
+        0.9768418005500071,
+        0.9744629840121521
+      ],
+      "tuned_on_all_macro_f1": 0.9744695513652555,
+      "optimism_gap": 0.00046113478248122064,
+      "best_params": {
+        "clf__lr__C": "5.0",
+        "clf__nb__alpha": "0.1",
+        "vect__ngram_range": "(1, 2)"
+      },
+      "grid_size": 8,
+      "seconds": 22.8
+    }
+  },
+  "ranking": [
+    "voting_ensemble__tfidf",
+    "multinomial_nb__tfidf",
+    "linear_svm__tfidf",
+    "complement_nb__tfidf",
+    "logistic_regression__tfidf",
+    "voting_ensemble__count",
+    "multinomial_nb__count",
+    "knn__tfidf",
+    "complement_nb__count",
+    "logistic_regression__count",
+    "random_forest__count",
+    "linear_svm__count",
+    "random_forest__tfidf",
+    "knn__count"
+  ],
+  "best": {
+    "key": "voting_ensemble__tfidf",
+    "model": "voting_ensemble",
+    "vectoriser": "tfidf",
+    "nested_macro_f1_mean": 0.9740084165827743,
+    "nested_macro_f1_std": 0.002714372466758518,
+    "nested_folds": [
+      0.9767526669188845,
+      0.9697923668824012,
+      0.9721922645504258,
+      0.9768418005500071,
+      0.9744629840121521
+    ],
+    "tuned_on_all_macro_f1": 0.9744695513652555,
+    "optimism_gap": 0.00046113478248122064,
+    "best_params": {
+      "clf__lr__C": "5.0",
+      "clf__nb__alpha": "0.1",
+      "vect__ngram_range": "(1, 2)"
+    },
+    "grid_size": 8,
+    "seconds": 22.8
+  },
+  "tied_with_best": [
+    "multinomial_nb__tfidf",
+    "voting_ensemble__tfidf"
+  ],
+  "optimism": {
+    "mean": 0.0006567955340859855,
+    "max": 0.003296452994765331,
+    "min": -0.0018572276348942651
+  }
+}

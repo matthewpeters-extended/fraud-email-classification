@@ -529,3 +529,52 @@ hardcoded so numbers cannot drift. One new entry, D18, corrected. 162 tests pass
 
 The bar a model must clear is 0.7013, set by formatting alone. The phase 6 pipeline clears
 it by 0.2649. Phase 8 may proceed to the model sweep.
+
+## Phase 8: model sweep
+
+Detail and the ranking in `docs/phase8_findings.md`. Numbers in `docs/phase8_sweep.json`.
+
+### D19. Linear SVM did not converge, so a quarter of the sweep reported noise. Severity: high, fixed.
+
+On CountVectorizer features, `LinearSVC` at its default 1,000 iteration cap failed to
+converge for all eight grid points. A model that stopped early is reporting an arbitrary
+point on its optimisation path rather than a fitted model, so those scores measured nothing.
+
+Cause: raw term counts are unscaled and span orders of magnitude, which conditions the margin
+problem badly. TF IDF is L2 normalised and converged without help, so the failure appeared on
+one representation only.
+
+Fixed by raising the cap to 20,000, verified by promoting `ConvergenceWarning` to an error
+and refitting all eight configurations. The sweep was rerun.
+
+Worth recording how nearly this was missed. scikit learn emits one warning per fit, so a
+nested search produced hundreds of identical lines that scrolled past as noise. They were the
+only signal that a quarter of the results were meaningless.
+
+### D20. Our optimism measurement was confounded. Severity: medium, fixed.
+
+The first attempt to quantify selection optimism produced a mean gap of 0.0019 in the
+negative direction. A bias that only ever inflates cannot produce a negative mean, so the
+measurement was wrong rather than the bias being absent.
+
+Cause: the nested figure used five outer folds, training on 80 percent of the data, while the
+non nested figure used the three fold inner splitter, training on 67 percent. The non nested
+number was depressed by less training data at the same time as being inflated by selection,
+and the larger of the two effects was the one we had not intended to measure.
+
+Fixed by giving both searches the same five folds, so training set size is identical and the
+only difference left is selection. The corrected gap is +0.0007 on average and +0.0033 at
+worst, which is the right direction and a plausible magnitude for small grids on a strong
+signal.
+
+The lesson generalises: when a measured effect has the wrong sign, suspect the experiment
+before concluding the effect is absent.
+
+### Phase 8 verdict
+
+Winner is a soft voting ensemble on tfidf features at 0.9740 macro F1, though it beats
+multinomial naive Bayes by 0.0019 against a standard deviation of 0.0027, costs roughly six
+times the compute, and gives up interpretability. Phase 9 reports both.
+
+Two new defects, D19 and D20, both ours and both fixed. 190 tests passing. Phase 9 may
+proceed to the holdout.
